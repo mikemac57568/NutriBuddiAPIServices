@@ -20,6 +20,8 @@ public class MainController {
 	@GetMapping(path="/addNewUser") // Map ONLY GET Requests
 	public @ResponseBody String addNewUser (@RequestParam String email
 			, @RequestParam String password
+			, @RequestParam String password2
+			, @RequestParam String userName
 			, @RequestParam String first
 			, @RequestParam String last
 			, @RequestParam String height
@@ -40,9 +42,18 @@ public class MainController {
 			return "Valid email required";
 		}
 		if (!password.equals("")) {
-			n.setPassword(password);
+			if (password.equals(password2)) {
+				n.setPassword(password);
+			} else {
+				return "Passwords must match";
+			}
 		} else {
 			return "Password required";
+		}
+		if (!userName.equals("")) {
+			n.setUserName(userName);
+		} else {
+			return "Username required";
 		}
 		if (!first.equals("")) {
 			n.setFirstName(first);
@@ -79,21 +90,81 @@ public class MainController {
 		return "User added";
 	}
 	
-	@GetMapping(path="/update") // Map ONLY GET Requests
-	public @ResponseBody String updateUser (@RequestParam String name
-			, @RequestParam String email) {
+	@GetMapping(path="/updateUser") // Map ONLY GET Requests
+	public @ResponseBody String updateUser (@RequestParam String email
+			, @RequestParam String password
+			, @RequestParam String password2
+			, @RequestParam String height
+			, @RequestParam String weight
+			, @RequestParam String age
+			, @RequestParam String gender) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 		
-		User n = userRepository.findByEmail(email);
-		n.setLastName(name);
+		User n; 
+				
+		if (!email.equals("")) {
+			if (userRepository.findByEmail(email) != null) {
+				n = userRepository.findByEmail(email);
+			} else {
+				return "Email does not exist";
+			}
+		} else {
+			return "Valid email required";
+		}
+		if (!password.equals("")) {
+			if (password.equals(password2)) {
+				n.setPassword(password);
+			} else {
+				return "Passwords must match";
+			}
+		} else {
+			return "Password required";
+		}
+		if (!height.equals("")) {
+			n.setHeight(Integer.parseInt(height));
+		} else {
+			return "Height required";
+		}
+		if (!weight.equals("")) {
+			n.setWeight(Integer.parseInt(weight));
+		} else {
+			return "Weight required";
+		}
+		if (!age.equals("")) {
+			n.setAge(Integer.parseInt(age));
+		} else {
+			return "Age required";
+		}
+		if (!gender.equals("")) {
+			n.setGender(Integer.parseInt(gender));
+		} else {
+			return "Gender required";
+		}
+		
+		
 		userRepository.save(n);
 		return "Saved";
+	}
+	
+	@GetMapping(path="/getUser") // Map ONLY GET Requests
+	public @ResponseBody User getUser (@RequestParam String email) {
+		// @ResponseBody means the returned String is the response, not a view name
+		// @RequestParam means it is a parameter from the GET or POST request
+		
+		return userRepository.findByEmail(email); 
+	
 	}
 
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<User> getAllUsers() {
 		// This returns a JSON or XML with the users
 		return userRepository.findAll();
+	}
+	
+	@GetMapping(path="/login")
+	public @ResponseBody User userLogin(@RequestParam String email, @RequestParam String password) {
+		
+		return userRepository.findByEmailAndPassword(email, password);
 	}
 }
