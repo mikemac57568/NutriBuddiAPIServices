@@ -44,7 +44,35 @@ public class User {
 	@OneToMany(mappedBy = "user")
     private List<UserGoal> userGoals;
 
-    public int getId() {
+	public User(){}
+
+	public User(String email, String password, String userName, String firstName, String lastName, int height, int weight, int age, int gender) {
+		this.email = email;
+		this.password = password;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.height = height;
+		this.weight = weight;
+		this.age = age;
+		this.gender = gender;
+	}
+
+	public User(String email, String password, String userName, String firstName, String lastName, int height, int weight, int age, int gender, List<Eats> eats, List<UserGoal> userGoals) {
+		this.email = email;
+		this.password = password;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.height = height;
+		this.weight = weight;
+		this.age = age;
+		this.gender = gender;
+		this.eats = eats;
+		this.userGoals = userGoals;
+	}
+
+	public int getId() {
  		return id;
  	}
 
