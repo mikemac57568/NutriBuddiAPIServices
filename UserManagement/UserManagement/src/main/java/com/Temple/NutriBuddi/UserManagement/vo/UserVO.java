@@ -17,6 +17,20 @@ public class UserVO {
     private String gender;
     private UserRepository userRepository;
 
+    public UserVO(String email, String password, String password2, String height, String weight, String age, String gender, UserRepository userRepository){
+        this.email = email;
+        this.password = password;
+        this.password2 = password2;
+        this.userName = userName;
+        this.first = first;
+        this.last = last;
+        this.height = height;
+        this.weight = weight;
+        this.age = age;
+        this.gender = gender;
+        this.userRepository = userRepository;
+    }
+
     public UserVO(String email, String password, String password2, String userName, String first, String last,
                   String height, String weight, String age, String gender, UserRepository userRepository){
         this.email = email;

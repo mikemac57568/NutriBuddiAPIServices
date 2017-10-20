@@ -83,52 +83,28 @@ public class UserController {
 			, @RequestParam String age
 			, @RequestParam String gender) {
 
-        User user;
+        UserVO userVO = new UserVO(email, password, password2, height, weight, age, gender, userRepository);
+		ArrayList<ValidationRule> rules = new ArrayList<>();
+		rules.add(new EmailValidationRule());
+		rules.add(new PasswordValidationRule());
+		rules.add(new HeightValidationRule());
+		rules.add(new WeightValidationRule());
+		rules.add(new AgeValidationRule());
+		rules.add(new GenderValidationRule());
 
-        if (!email.equals("")) {
-			if (userRepository.findByEmail(email) != null) {
-                user = userRepository.findByEmail(email);
-			} else {
-				return new ResponseEntity<>("Email does not exist", HttpStatus.NOT_ACCEPTABLE);
+		ValidationResponse validationResponse;
+
+		for(ValidationRule rule: rules){
+			validationResponse = rule.validate(userVO);
+			LOG.info(validationResponse.toString());
+			if(!validationResponse.getStatus().is2xxSuccessful()){
+				LOG.info("Status failure: " + validationResponse.getStatus());
+				return new ResponseEntity<>(validationResponse.getResponseBody(), validationResponse.getStatus());
 			}
-		} else {
-			return new ResponseEntity<>("Valid email required", HttpStatus.NOT_ACCEPTABLE);
 		}
 
-		if (!password.equals("")) {
-			if (password.equals(password2)) {
-                user.setPassword(password);
-			} else {
-				return new ResponseEntity<>("Passwords must match", HttpStatus.NOT_ACCEPTABLE);
-			}
-		} else {
-			return new ResponseEntity<>("Password required", HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		if (!height.equals("")) {
-            user.setHeight(Integer.parseInt(height));
-		} else {
-			return new ResponseEntity<>("Height required", HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		if (!weight.equals("")) {
-            user.setWeight(Integer.parseInt(weight));
-		} else {
-			return new ResponseEntity<>("Weight required", HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		if (!age.equals("")) {
-            user.setAge(Integer.parseInt(age));
-		} else {
-			return new ResponseEntity<>("Age required", HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		if (!gender.equals("")) {
-            user.setGender(Integer.parseInt(gender));
-		} else {
-			return new ResponseEntity<>("Gender required", HttpStatus.NOT_ACCEPTABLE);
-		}
-		
+		User user = new User(email, password, Integer.parseInt(height), Integer.parseInt(weight),
+					Integer.parseInt(age), Integer.parseInt(gender));
 		
 		userRepository.save(user);
 		return new ResponseEntity<>("User Updated", HttpStatus.OK);
