@@ -123,6 +123,12 @@ public class UserController {
 		return userRepository.findAll();
 	}
 	
+	@GetMapping(path="/delete")
+	public @ResponseBody long deleteUser(@RequestParam String email) {
+
+		return userRepository.deleteByEmail(email);
+	}
+	
 	@GetMapping(path="/login")
 	@ResponseBody
 	public ResponseEntity<Object> userLogin(@RequestParam String email, @RequestParam String password) {

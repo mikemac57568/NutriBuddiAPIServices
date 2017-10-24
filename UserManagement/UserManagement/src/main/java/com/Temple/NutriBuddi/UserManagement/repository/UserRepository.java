@@ -1,6 +1,8 @@
 package com.Temple.NutriBuddi.UserManagement.repository;
 
+import javax.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
+
 
 import com.Temple.NutriBuddi.UserManagement.model.User;
 
@@ -12,4 +14,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	User findByEmail(String email);
 	User findById(int id);
 	User findByEmailAndPassword(String email, String password);	
+	
+	@Transactional
+	long deleteByEmail(String email);
 }
