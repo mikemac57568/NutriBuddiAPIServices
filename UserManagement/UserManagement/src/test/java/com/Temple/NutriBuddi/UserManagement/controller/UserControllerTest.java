@@ -1,6 +1,17 @@
 package com.Temple.NutriBuddi.UserManagement.controller;
 
 import com.Temple.NutriBuddi.UserManagement.UserManagementApplication;
+
+import junit.framework.Assert;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Base64;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,6 +24,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +35,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class UserControllerTest {
+	
+	public String userAuthorization;
+	
+	@Before
+	public void setup() {
+		
+		userAuthorization = "Basic " +
+	            Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
+	}
 
     private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
 
@@ -44,18 +65,15 @@ public class UserControllerTest {
     }
 
     @Test
-    public void CheckGetAllUsersResponseIsJSON() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders
-                        .get("/user/all")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        log.info(mvcResult.getResponse().toString());
-    }
-
-    @Test
-    public void getAllUsers(){
+    public void getAllUsers() throws Exception{
+    	
+    	String response = mockMvc.perform(get("/user/all")
+                .header("Authorization", userAuthorization)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        
+        log.info("Response: " + response);
     }
 
     @Test
