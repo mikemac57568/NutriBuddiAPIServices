@@ -35,6 +35,8 @@ public class UserRepositoryTest {
         users.add(new User("something@23532.com", "qwerty;", "something", "why",
                            "what", 13, 200, 53, 2));
         users.add(expectedUser);
+        users.add(new User("deleteme@23532.com", "lkljfsfdg;", "llaf", "why",
+                "what", 13, 200, 53, 2));
         userRepository.save(users);
     }
 
@@ -56,6 +58,12 @@ public class UserRepositoryTest {
         User actualUser = userRepository.findByEmailAndPassword("test1@test.com", "asdfjkl;");
         assertEquals(expectedUser.getEmail(), actualUser.getEmail());
         assertEquals(expectedUser.getPassword(), actualUser.getPassword());
+    }
+    
+    @Test
+    public void testDeleteByEmail() throws Exception {
+        Long response = userRepository.deleteByEmail("deleteme@23532.com");
+        assert(response == 1);
     }
 
 }

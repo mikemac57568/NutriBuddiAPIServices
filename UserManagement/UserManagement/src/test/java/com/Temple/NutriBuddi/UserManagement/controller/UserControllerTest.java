@@ -1,16 +1,9 @@
 package com.Temple.NutriBuddi.UserManagement.controller;
 
-import com.Temple.NutriBuddi.UserManagement.UserManagementApplication;
-
-import junit.framework.Assert;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Base64;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,10 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.Temple.NutriBuddi.UserManagement.UserManagementApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -105,6 +97,58 @@ public class UserControllerTest {
                 .andReturn().getResponse().getContentAsString();
         
         log.info("userLoginSuccess Response: " + response);
+    }
+    
+    @Test
+    public void userLoginFailEmail() throws Exception {
+    	String response = mockMvc.perform(get("/user/login")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester")
+                .param("password", "qualitypasssword")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andReturn().getResponse().getContentAsString();
+        
+        log.info("userLoginFailureEmail Response: " + response);
+    }
+    
+    @Test
+    public void userLoginFailPassword() throws Exception {
+    	String response = mockMvc.perform(get("/user/login")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("password", "qualitypasss")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andReturn().getResponse().getContentAsString();
+        
+        log.info("userLoginFailurePassword Response: " + response);
+    }
+    
+    @Test
+    public void userLoginFailEmpty() throws Exception {
+    	String response = mockMvc.perform(get("/user/login")
+                .header("Authorization", userAuthorization)
+                .param("email", "")
+                .param("password", "")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andReturn().getResponse().getContentAsString();
+        
+        log.info("userLoginFailureEmpty Response: " + response);
+    }
+    
+    @Test
+    public void userLoginFailEverything() throws Exception {
+    	String response = mockMvc.perform(get("/user/login")
+                .header("Authorization", userAuthorization)
+                .param("email", "butts@butt.com")
+                .param("password", "test")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andReturn().getResponse().getContentAsString();
+        
+        log.info("userLoginFailureEverything Response: " + response);
     }
 
 }
