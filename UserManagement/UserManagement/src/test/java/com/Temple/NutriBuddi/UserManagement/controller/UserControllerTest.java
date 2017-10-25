@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -33,16 +35,32 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
     classes = UserManagementApplication.class
 )
 @AutoConfigureMockMvc
+@Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class UserControllerTest {
 	
 	public String userAuthorization;
 	
 	@Before
-	public void setup() {
+	public void setup() throws Exception, Exception {
 		
 		userAuthorization = "Basic " +
 	            Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
+		
+		String response = mockMvc.perform(get("/user/addNewUser")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("password", "qualitypasssword")
+                .param("password2", "qualitypasssword")
+                .param("userName", "Testy McTesterson")
+                .param("first", "Bill")
+                .param("last", "Bobaggins")
+                .param("height", "47")
+                .param("weight", "147")
+                .param("age", "37")
+                .param("gender", "1"))
+                .andReturn().getResponse().getContentAsString();
+		
 	}
 
     private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
@@ -73,12 +91,20 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         
-        log.info("Response: " + response);
+        log.info("getAllUsers Response: " + response);
     }
 
     @Test
-    public void userLogin() throws Exception {
-
+    public void userLoginSuccess() throws Exception {
+    	String response = mockMvc.perform(get("/user/login")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("password", "qualitypasssword")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        
+        log.info("userLoginSuccess Response: " + response);
     }
 
 }
