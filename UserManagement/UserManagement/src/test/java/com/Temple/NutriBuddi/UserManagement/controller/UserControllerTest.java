@@ -30,16 +30,19 @@ import com.Temple.NutriBuddi.UserManagement.UserManagementApplication;
 @Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class UserControllerTest {
-	
+
+    @Autowired
+    private MockMvc mockMvc;
 	public String userAuthorization;
-	
-	@Before
-	public void setup() throws Exception, Exception {
-		
-		userAuthorization = "Basic " +
-	            Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
-		
-		String response = mockMvc.perform(get("/user/addNewUser")
+    private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
+
+    @Before
+    public void setup() throws Exception, Exception {
+
+        userAuthorization = "Basic " +
+                Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
+
+        String response = mockMvc.perform(get("/user/addNewUser")
                 .header("Authorization", userAuthorization)
                 .param("email", "jUnitTester@tester.com")
                 .param("password", "qualitypasssword")
@@ -52,16 +55,42 @@ public class UserControllerTest {
                 .param("age", "37")
                 .param("gender", "1"))
                 .andReturn().getResponse().getContentAsString();
-		
-	}
-
-    private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
-
-    @Autowired
-    private MockMvc mockMvc;
+    }
 
     @Test
     public void addNewUser() throws Exception {
+        mockMvc.perform(get("/user/addNewUser")
+                .header("Authorization", userAuthorization)
+                .param("email", "fubar@tester.com")
+                .param("password", "1ring2rulthemAll")
+                .param("password2", "1ring2rulthemAll")
+                .param("userName", "SauronIsLife")
+                .param("first", "Bilbo")
+                .param("last", "Bobaggins")
+                .param("height", "50")
+                .param("weight", "110")
+                .param("age", "203")
+                .param("gender", "2"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+    }
+
+    @Test
+    public void addNewUserWithDuplicateEmail() throws Exception {
+        mockMvc.perform(get("/user/addNewUser")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("password", "qualitypasssword")
+                .param("password2", "qualitypasssword")
+                .param("userName", "Testasdfjkl;")
+                .param("first", "Elliot")
+                .param("last", "Alderson")
+                .param("height", "162")
+                .param("weight", "150")
+                .param("age", "32")
+                .param("gender", "1"))
+                .andExpect(status().isNotAcceptable())
+                .andReturn().getResponse().getContentAsString();
     }
 
     @Test
