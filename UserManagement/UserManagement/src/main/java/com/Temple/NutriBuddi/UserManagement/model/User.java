@@ -1,6 +1,7 @@
 package com.Temple.NutriBuddi.UserManagement.model;
 
 import com.Temple.NutriBuddi.UserManagement.model.Eats;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class User {
     private int age;
     
     private int gender;
-    
+
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private List<Eats> eats;
 

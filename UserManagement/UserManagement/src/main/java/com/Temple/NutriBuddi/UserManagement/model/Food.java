@@ -1,6 +1,7 @@
 package com.Temple.NutriBuddi.UserManagement.model;
 
 import com.Temple.NutriBuddi.UserManagement.model.Eats;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.List;
 
@@ -51,7 +52,8 @@ public class Food {
 	private Integer potassium;
 
 	private Integer zinc;
-	
+
+	@JsonBackReference
 	@OneToMany(mappedBy = "food")
     private List<Eats> eats;
 

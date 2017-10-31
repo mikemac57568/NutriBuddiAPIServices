@@ -1,5 +1,8 @@
 package com.Temple.NutriBuddi.UserManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,10 +21,12 @@ public class Eats {
 
     private Date transactionDate;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    
+
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "food_id")
     private Food food;
