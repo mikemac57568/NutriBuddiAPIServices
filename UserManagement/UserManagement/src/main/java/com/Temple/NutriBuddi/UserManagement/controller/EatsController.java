@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Temple.NutriBuddi.UserManagement.model.Eats;
+import com.Temple.NutriBuddi.UserManagement.model.Food;
 import com.Temple.NutriBuddi.UserManagement.repository.EatsRepository;
 import com.Temple.NutriBuddi.UserManagement.repository.FoodRepository;
 import com.Temple.NutriBuddi.UserManagement.repository.UserRepository;
@@ -36,19 +37,25 @@ public class EatsController {
 		, @RequestParam String numServings
 		, @RequestParam String foodName) {
 	
-		int s = Integer.parseInt(numServings);
-		
-		//use this VO for validation or whatever? I dunno
-		//EatsVO eatsVO = new EatsVO(uId, s, fId, eatsRepository);
+		int s;
+		try {
+			s = Integer.parseInt(numServings);
+		} catch (NumberFormatException e ) {
+			return new ResponseEntity<>("Number of servings is invalid", HttpStatus.NOT_ACCEPTABLE);
+		}
 				
-		//check not null on repositorys
+		if (userRepository.findByEmail(email) == null) {
+			return new ResponseEntity<>("Email does not exist", HttpStatus.NOT_ACCEPTABLE);
+		}
+		if (foodRepository.findByFoodName(foodName) == null) {
+			return new ResponseEntity<>(foodName + " does not exist", HttpStatus.NOT_ACCEPTABLE);
+		}
 		
-		//need error responses
-
 		Eats eats = new Eats(userRepository.findByEmail(email), s, foodRepository.findByFoodName(foodName));
 		
 		eatsRepository.save(eats);
 		return new ResponseEntity<>("Eat transaction added", HttpStatus.OK);
 	}
+	
 
 }
