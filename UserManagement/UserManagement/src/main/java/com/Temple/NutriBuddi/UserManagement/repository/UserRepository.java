@@ -13,8 +13,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	
 	User findByEmail(String email);
 	User findById(int id);
-	User findByEmailAndPassword(String email, String password);	
-	
+	User findByEmailAndPassword(String email, String password);
+
 	@Transactional
 	long deleteByEmail(String email);
 }

@@ -62,6 +62,32 @@ public class Food {
 	@OneToMany(mappedBy="food")
 	private List<ObjectImage> objectImages;
 
+	public Food(){}
+
+	public Food(String foodName, String servingUnit, Integer calories, Integer protein, Integer totalFat,
+				Integer satFat, Integer transFat, Integer carbohydrates, Integer sodium, Integer sugar,
+				Integer fiber, Integer vitaminC, Integer vitaminD, Integer iron, Integer magnesium,
+				Integer phospherous, Integer potassium, Integer zinc) {
+		this.foodName = foodName;
+		this.servingUnit = servingUnit;
+		this.calories = calories;
+		this.protein = protein;
+		this.totalFat = totalFat;
+		this.satFat = satFat;
+		this.transFat = transFat;
+		this.carbohydrates = carbohydrates;
+		this.sodium = sodium;
+		this.sugar = sugar;
+		this.fiber = fiber;
+		this.vitaminC = vitaminC;
+		this.vitaminD = vitaminD;
+		this.iron = iron;
+		this.magnesium = magnesium;
+		this.phospherous = phospherous;
+		this.potassium = potassium;
+		this.zinc = zinc;
+	}
+
 	public Integer getId() {
 		return id;
 	}
