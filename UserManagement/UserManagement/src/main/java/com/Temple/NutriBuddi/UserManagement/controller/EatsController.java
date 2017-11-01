@@ -1,5 +1,6 @@
 package com.Temple.NutriBuddi.UserManagement.controller;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import com.Temple.NutriBuddi.UserManagement.repository.EatsRepository;
 import com.Temple.NutriBuddi.UserManagement.repository.FoodRepository;
 import com.Temple.NutriBuddi.UserManagement.repository.UserRepository;
 
-@Controller    
+@Controller
 @RequestMapping(path="/eats")
 public class EatsController {
 	@Autowired
@@ -59,6 +60,23 @@ public class EatsController {
 		eatsRepository.save(eats);
 		return new ResponseEntity<>("Eat transaction added", HttpStatus.OK);
 	}
-	
+
+	@GetMapping(path="/getEatsByFoodName")
+	@ResponseBody
+	public ResponseEntity<Object> getEatsByFoodName(@RequestParam String foodName){
+		ResponseEntity response;
+		List<Eats> eats;
+		if(foodName != null && foodName != ""){
+			try{
+				eats = eatsRepository.findByFoodName(foodName);
+				response = new ResponseEntity<>(eats, HttpStatus.OK);
+			}catch(Exception e){
+				response = new ResponseEntity<>("Error with request", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			response = new ResponseEntity<>("Foodname cannot be empty", HttpStatus.NOT_ACCEPTABLE);
+		}
+		return response;
+	}
 
 }

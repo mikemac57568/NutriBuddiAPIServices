@@ -108,4 +108,13 @@ public class EatsControllerTest {
                 .andExpect(status().isNotAcceptable())
                 .andReturn().getResponse().getContentAsString();
     }
+
+    @Test
+	public void getEatsByFoodName() throws Exception {
+    	String response = mockMvc.perform(get("/eats/getEatsByFoodName")
+				.header("Authorization", authorization)
+				.param("foodName", "quantumKumquat"))
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+	}
 }
