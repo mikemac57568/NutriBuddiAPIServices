@@ -36,7 +36,9 @@ public class Eats {
     @ManyToOne
     @JoinColumn(name = "food_id")
     private Food food;
-    
+
+    public Eats(){}
+
     public Eats(User user, int numServings, Food food) {
     	this.user = user;
     	this.numServings = numServings;
@@ -82,5 +84,16 @@ public class Eats {
 
     public void setFood(Food food) {
         this.food = food;
+    }
+
+    @Override
+    public String toString() {
+        return "Eats{" +
+                "id=" + id +
+                ", numServings=" + numServings +
+                ", transactionDate=" + transactionDate +
+                ", user=" + user +
+                ", food=" + food +
+                '}';
     }
 }

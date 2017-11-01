@@ -7,8 +7,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
 
-public interface EatsRepository extends CrudRepository<Eats, Long> {
+public interface EatsRepository extends CrudRepository<Eats, Long>, QueryByExampleExecutor<Eats> {
 
 	List<Eats> findByUserId(int userId);
 	List<Eats> findByFoodId(int foodId);

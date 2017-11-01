@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.Temple.NutriBuddi.UserManagement.model.Eats;
 import com.Temple.NutriBuddi.UserManagement.model.User;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
@@ -40,22 +39,25 @@ public class EatsRepositoryTest {
 	private String testEmail = "test@testing.com";
 	private String testFood = "wapple";
 
+	private User user;
+	private Food food;
+	private Eats eats;
 
 	@Before
 	public void setUp() throws Exception {
 //		//Insert test data into user repository
-		User user = new User(testEmail, "thisisatest;", "test1", "boo",
+		user = new User(testEmail, "thisisatest;", "test1", "boo",
 				"blah", 5, 180, 30, 1);
 		userRepository.save(user);
 		Integer num1 = new Integer(23);
 		Integer num2 = new Integer(1);
 //
 //		//Insert test data for food repository
-		Food food = new Food(testFood, "2", 100, 100, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2);
+		food = new Food(testFood, "2", 100, 100, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2, num2);
 		foodRespository.save(food);
 
 		//Insert test data for eats repository
-		Eats eats = new Eats(user, 17, food);
+		eats = new Eats(user, 17, food);
 		eatsRepository.save(eats);
 	}
 
@@ -93,6 +95,18 @@ public class EatsRepositoryTest {
 		assertNotNull(response);
 		assertTrue("List size is greater than 0",response.size() > 0);
 
+	}
+
+	@Test
+	public void testFindByFoodNameWithExampleMatchers(){
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withIgnorePaths("id")
+				.withIgnorePaths("transactionDate");
+		Example<Eats> example = Example.of(eats, matcher);
+		Eats response =  eatsRepository.findOne(example);
+		assertNotNull(response);
+		log.info("response: " + response.toString());
+		assert(eatsRepository.findOne(example).equals(eats));
 	}
 
 }
