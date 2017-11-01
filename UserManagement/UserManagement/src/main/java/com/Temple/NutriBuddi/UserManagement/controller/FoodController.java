@@ -23,6 +23,17 @@ public class FoodController {
 	private FoodRepository foodRepository;
 	
 	static Logger LOG = Logger.getLogger(EatsController.class.getName());
+	
+	@GetMapping(path="/getFoodNutrition") // Map ONLY GET Requests
+	@ResponseBody
+	public ResponseEntity<Object> getFoodNutrition (@RequestParam String foodName) {
+		
+		if (foodRepository.findByFoodName(foodName) == null) {
+			return new ResponseEntity<>(foodName + " does not exist", HttpStatus.NOT_ACCEPTABLE);
+		}
+	
+		return new ResponseEntity<>(foodRepository.findByFoodName(foodName), HttpStatus.OK);
+	}
 
 	@GetMapping(path="/addTestFood") // Map ONLY GET Requests
 	@ResponseBody

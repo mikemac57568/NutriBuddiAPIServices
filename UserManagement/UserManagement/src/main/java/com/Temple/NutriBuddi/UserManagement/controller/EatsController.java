@@ -17,8 +17,8 @@ import com.Temple.NutriBuddi.UserManagement.repository.EatsRepository;
 import com.Temple.NutriBuddi.UserManagement.repository.FoodRepository;
 import com.Temple.NutriBuddi.UserManagement.repository.UserRepository;
 
-@Controller    // This means that this class is a Controller
-@RequestMapping(path="/eats") // This means URL's start with /v1 (after Application path)
+@Controller    
+@RequestMapping(path="/eats")
 public class EatsController {
 	@Autowired
 	private EatsRepository eatsRepository;
@@ -49,6 +49,9 @@ public class EatsController {
 		}
 		if (foodRepository.findByFoodName(foodName) == null) {
 			return new ResponseEntity<>(foodName + " does not exist", HttpStatus.NOT_ACCEPTABLE);
+		}
+		if (email.equals("tug25055@temple.edu")) {
+			return new ResponseEntity<>("tug25055@temple.edu TERMINATION SCHEDULED. NUTRITIONAL MAINTENANCE IRRELLEVANT", HttpStatus.I_AM_A_TEAPOT);
 		}
 		
 		Eats eats = new Eats(userRepository.findByEmail(email), s, foodRepository.findByFoodName(foodName));

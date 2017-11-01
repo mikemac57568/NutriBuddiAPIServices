@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,9 +30,8 @@ import com.Temple.NutriBuddi.UserManagement.repository.FoodRepository;
 @AutoConfigureMockMvc
 @Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class EatsControllerTest {
-
-    @Autowired
+public class FoodControllerTest {
+	 @Autowired
     private MockMvc mockMvc;
     
     @Autowired
@@ -41,15 +39,17 @@ public class EatsControllerTest {
     
     
 	public String authorization;
-    private static final Logger log = LoggerFactory.getLogger(EatsControllerTest.class);
-
+    private static final Logger log = LoggerFactory.getLogger(FoodControllerTest.class);
+    
+    Food quantumKumquat;
+    
     @Before
     public void setup() throws Exception, Exception {
 
         authorization = "Basic " +
                 Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
 
-        String response = mockMvc.perform(get("/user/addNewUser")
+        /*String response = mockMvc.perform(get("/user/addNewUser")
                 .header("Authorization", authorization)
                 .param("email", "jUnitTester@tester.com")
                 .param("password", "qualitypasssword")
@@ -61,9 +61,9 @@ public class EatsControllerTest {
                 .param("weight", "147")
                 .param("age", "37")
                 .param("gender", "1"))
-                .andReturn().getResponse().getContentAsString();
+                .andReturn().getResponse().getContentAsString();*/
         
-        Food quantumKumquat = new Food();
+        quantumKumquat = new Food();
 		quantumKumquat.setFoodName("quantumKumquat");
 		quantumKumquat.setCalories(0);
 		quantumKumquat.setCarbohydrates(0);
@@ -86,26 +86,15 @@ public class EatsControllerTest {
 		foodRepository.save(quantumKumquat);
     
     }
-
+    
     @Test
-    public void addNewEats() throws Exception {
-    	String response = mockMvc.perform(get("/eats/addNewEats")
+    public void getFoodNutrition() throws Exception {
+    	String response = mockMvc.perform(get("/food/getFoodNutrition")
                 .header("Authorization", authorization)
-                .param("email", "jUnitTester@tester.com")
-                .param("numServings", "3")
                 .param("foodName", "quantumKumquat"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
+    	
     }
     
-    @Test
-    public void addNewEatsWithBadFood() throws Exception {
-    	String response = mockMvc.perform(get("/eats/addNewEats")
-                .header("Authorization", authorization)
-                .param("email", "jUnitTester@tester.com")
-                .param("numServings", "3")
-                .param("foodName", "Arnold Schwarzenegger"))
-                .andExpect(status().isNotAcceptable())
-                .andReturn().getResponse().getContentAsString();
-    }
 }

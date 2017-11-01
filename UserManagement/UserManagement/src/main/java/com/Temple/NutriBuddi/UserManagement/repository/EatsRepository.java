@@ -16,4 +16,7 @@ public interface EatsRepository extends CrudRepository<Eats, Long>, QueryByExamp
 
 	@Query("SELECT e FROM Eats e, Food f, User u WHERE f.id = e.food AND u.id = e.user AND f.foodName = :foodName")
 	List<Eats> findByFoodName(@Param("foodName") String foodName);
+	
+	@Query("SELECT e FROM Eats e, Food f, User u WHERE f.id = e.food AND u.id = e.user AND u.email = :email")
+	List<Eats> findByEmail(@Param("email") String email);
 }
