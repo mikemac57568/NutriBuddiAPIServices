@@ -20,13 +20,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Base64;
 
 
-public class UserSteps extends SpringFeatureTest{
+public class UserStepsAll extends SpringFeatureTest{
     @Autowired
     private MockMvc mockMvc;
     private String userAuthorization;
     private MockHttpServletRequestBuilder request;
     private ResultActions response;
-    Logger log = LoggerFactory.getLogger(UserSteps.class);
+    Logger log = LoggerFactory.getLogger(UserStepsAll.class);
 
 
     //TODO: Add and check tokenization
