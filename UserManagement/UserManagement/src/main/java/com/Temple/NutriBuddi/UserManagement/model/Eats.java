@@ -46,6 +46,13 @@ public class Eats {
     	transactionDate = new Date();
     }
 
+    public Eats(User user, int numServings, Food food, Date date) {
+        this.user = user;
+        this.numServings = numServings;
+        this.food = food;
+        transactionDate = date;
+    }
+
     public Integer getId() {
         return id;
     }

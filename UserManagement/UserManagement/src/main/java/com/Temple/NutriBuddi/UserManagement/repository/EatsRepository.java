@@ -19,4 +19,7 @@ public interface EatsRepository extends CrudRepository<Eats, Long>, QueryByExamp
 	
 	@Query("SELECT e FROM Eats e, Food f, User u WHERE f.id = e.food AND u.id = e.user AND u.email = :email")
 	List<Eats> findByEmail(@Param("email") String email);
+
+	@Query("SELECT e FROM Eats e, Food f, User u WHERE f.id = e.food AND u.id = e.user AND u.email = :email AND e.transactionDate between convert(:startDate, datetime) and convert(:endDate, datetime)")
+	List<Eats> findBetweenDateRangeAndEmail(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("email") String email);
 }

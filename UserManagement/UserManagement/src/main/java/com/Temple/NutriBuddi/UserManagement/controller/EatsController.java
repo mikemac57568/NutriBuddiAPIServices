@@ -1,5 +1,6 @@
 package com.Temple.NutriBuddi.UserManagement.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -78,5 +79,40 @@ public class EatsController {
 		}
 		return response;
 	}
+
+
+	@GetMapping(path="/getEatsByDatesAndEmail")
+	@ResponseBody
+	public ResponseEntity<Object> getEatsByDateRangeAndEmail(@RequestParam String startDate, @RequestParam String endDate, @RequestParam String email){
+		ResponseEntity<Object> response = null;
+		if(startDate == null || startDate == ""){
+			response = new ResponseEntity<>("start date cannot be empty", HttpStatus.NOT_ACCEPTABLE);
+		}
+		if(endDate == "" ||  endDate != null ){
+			response = new ResponseEntity<>("end date cannot be empty", HttpStatus.NOT_ACCEPTABLE);
+		} else {
+			try {
+				Date start = Date.valueOf(startDate);
+				Date end = Date.valueOf(endDate);
+				if(!start.before(end)){
+					response = new ResponseEntity<>("start date must be before end date", HttpStatus.NOT_ACCEPTABLE);
+				}
+			} catch(Exception e){
+				response = new ResponseEntity<>("date(s) are not valid dates", HttpStatus.NOT_ACCEPTABLE);
+				System.out.println(e.getMessage());
+			}
+		}
+		if(email == "" || email == null){
+			response = new ResponseEntity<>("email cannot be empty", HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		List<Eats> eats = eatsRepository.findBetweenDateRangeAndEmail(startDate, endDate, email);
+		if(eats.size() > 0){
+		    response = new ResponseEntity<>(eats, HttpStatus.OK);
+		}
+		return response;
+	}
+
+
 
 }
