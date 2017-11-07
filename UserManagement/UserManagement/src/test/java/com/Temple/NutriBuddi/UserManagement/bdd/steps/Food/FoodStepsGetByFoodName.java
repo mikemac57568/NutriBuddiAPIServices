@@ -1,5 +1,6 @@
 package com.Temple.NutriBuddi.UserManagement.bdd.steps.Food;
 
+import com.Temple.NutriBuddi.UserManagement.bdd.SpringFeatureTest;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -10,9 +11,15 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Base64;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class FoodStepsGetByFoodName {
+public class FoodStepsGetByFoodName extends SpringFeatureTest{
     @Autowired
     private MockMvc mockMvc;
     private ResultActions response;
@@ -26,9 +33,8 @@ public class FoodStepsGetByFoodName {
                 .accept(MediaType.APPLICATION_JSON));
     }
 
-    @Then("^it gets back a success and goes hunting$")
+    @Then("^it gets back a failure and goes hunting$")
     public void itGetsBackASuccessAndGoesHunting() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        response.andExpect(status().is4xxClientError()).andDo(print()).andReturn();
     }
 }
