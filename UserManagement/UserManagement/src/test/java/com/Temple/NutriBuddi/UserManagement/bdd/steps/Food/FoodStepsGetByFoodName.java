@@ -1,4 +1,4 @@
-package com.Temple.NutriBuddi.UserManagement.bdd.steps;
+package com.Temple.NutriBuddi.UserManagement.bdd.steps.Food;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;

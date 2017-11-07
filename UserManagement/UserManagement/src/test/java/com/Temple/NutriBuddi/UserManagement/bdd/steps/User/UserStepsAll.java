@@ -1,4 +1,4 @@
-package com.Temple.NutriBuddi.UserManagement.bdd.steps;
+package com.Temple.NutriBuddi.UserManagement.bdd.steps.User;
 
 import com.Temple.NutriBuddi.UserManagement.bdd.SpringFeatureTest;
 import cucumber.api.java.en.And;

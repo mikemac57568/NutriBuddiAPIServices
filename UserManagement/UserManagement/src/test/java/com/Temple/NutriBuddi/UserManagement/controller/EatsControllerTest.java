@@ -38,7 +38,7 @@ public class EatsControllerTest {
     
     @Autowired
     FoodRepository foodRepository;
-    
+
     
 	public String authorization;
     private static final Logger log = LoggerFactory.getLogger(EatsControllerTest.class);
@@ -116,5 +116,17 @@ public class EatsControllerTest {
 				.param("foodName", "quantumKumquat"))
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
+	}
+
+	@Test
+	public void getEatsByDateRangeAndEmail() throws Exception {
+		String response = mockMvc.perform(get("/eats/getEatsByDatesAndEmail")
+				.header("Authorization", authorization)
+				.param("startDate", "2017/10/01")
+				.param("endDate", "2017/11/01")
+				.param("email", "jUnitTester@tester.com"))
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+		log.info("response: " + response);
 	}
 }
