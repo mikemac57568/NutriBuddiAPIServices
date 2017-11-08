@@ -36,7 +36,7 @@ public class UserGoalRepositoryTest {
     private String goal2 = "I want to hack NutriBuddi";
 
 
-    @Before
+/*    @Before
     public void setUp() throws Exception {
         users = new ArrayList<>();
         users.add(new User(email1, "it'sallaconspiracy;", "sugarcrazedstan", "stan",
@@ -59,6 +59,6 @@ public class UserGoalRepositoryTest {
         long status = userGoalRepository.deleteByUserIdAndGoal(user.getId(), goal1);
         log.info("status: " + status);
         assertTrue(status == 1);
-    }
+    }*/
 
 }

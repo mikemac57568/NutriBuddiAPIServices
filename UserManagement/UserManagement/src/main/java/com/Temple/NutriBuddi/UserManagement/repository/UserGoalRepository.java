@@ -11,7 +11,7 @@ public interface UserGoalRepository extends CrudRepository<UserGoal, Long>{
 //    @Query("Delete FROM UserGoal ug, User u WHERE u.id = ug.user AND u.email = :email AND ug.goal = :goal")
 //    long deleteByGoal(String email, String goal);
 
-    @Transactional
-    long deleteByUserIdAndGoal(int userId, String goal);
+    /*@Transactional
+    long deleteByUserIdAndGoal(int userId, String goal);*/
 
 }

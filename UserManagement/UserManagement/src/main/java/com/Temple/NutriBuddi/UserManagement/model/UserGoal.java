@@ -12,24 +12,35 @@ public class UserGoal {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
-    private String goal;
-
-    @JsonManagedReference
+   	private int protein;
+    private int carbs;
+    private int calories;
+    private int sodium;
+    private int totalFat;
+    
+    //0 : gain weight
+    //1 : lose weight
+    //2 : maintain weight
+    //>=3 : no goal set
+    private int weightGoal;
+    
+	@JsonManagedReference
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
     public UserGoal(){}
 
-    public UserGoal(String goal, User user){
-        this.goal = goal;
+    public UserGoal(User user, int carbs, int protein, int calories, int sodium, int totalFat, int weightGoal){
         this.user = user;
+        this.carbs = carbs;
+        this.protein = protein;
+        this.calories = calories;
+        this.sodium = sodium;
+        this.totalFat = totalFat;
+        this.weightGoal = weightGoal;
     }
-
-    //    private double weightChange;
-
-    //    private double nutritionGoal;
-
+    
     public int getId() {
         return id;
     }
@@ -37,15 +48,55 @@ public class UserGoal {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public int getProtein() {
+		return protein;
+	}
 
-    public String getGoal() {
-        return goal;
-    }
+	public void setProtein(int protein) {
+		this.protein = protein;
+	}
 
-    public void setGoal(String goal) {
-        this.goal = goal;
-    }
+	public int getCarbs() {
+		return carbs;
+	}
 
+	public void setCarbs(int carbs) {
+		this.carbs = carbs;
+	}
+
+	public int getCalories() {
+		return calories;
+	}
+
+	public void setCalories(int calories) {
+		this.calories = calories;
+	}
+
+	public int getSodium() {
+		return sodium;
+	}
+
+	public void setSodium(int sodium) {
+		this.sodium = sodium;
+	}
+	
+	public int getTotalFat() {
+		return totalFat;
+	}
+
+	public void setTotalFat(int totalFat) {
+		this.totalFat = totalFat;
+	}
+	
+   	public int getWeight() {
+		return weightGoal;
+	}
+
+	public void setWeight(int weightGoal) {
+		this.weightGoal = weightGoal;
+	}
+   
     public User getUser() {
         return user;
     }

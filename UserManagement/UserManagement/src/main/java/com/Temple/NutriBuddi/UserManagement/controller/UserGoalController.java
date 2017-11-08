@@ -23,7 +23,7 @@ public class UserGoalController {
     private Logger logger = LoggerFactory.getLogger(UserGoalController.class);
 
 
-    @GetMapping(path="/deleteUserGoal")
+/*    @GetMapping(path="/deleteUserGoal")
     @ResponseBody
     public ResponseEntity<Object> deleteUserGoal(@RequestParam String email, @RequestParam String userGoal){
         ResponseEntity response;
@@ -43,7 +43,7 @@ public class UserGoalController {
             }
         }
         return response;
-    }
+    }*/
 
 
 }
