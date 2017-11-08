@@ -36,7 +36,7 @@ public class UserGoalControllerTest {
     private String userAuthorization;
     private static final Logger log = LoggerFactory.getLogger(UserGoalControllerTest.class);
 
- /*   @Before
+   @Before
     public void setup() throws Exception {
 
         userAuthorization = "Basic " +
@@ -61,10 +61,9 @@ public class UserGoalControllerTest {
         mockMvc.perform(get("/userGoal/deleteUserGoal")
                 .header("Authorization", userAuthorization)
                 .param("email", "jUnitTester@tester.com")
-                .param("userGoal", "")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
-    }*/
+    }
 
 }

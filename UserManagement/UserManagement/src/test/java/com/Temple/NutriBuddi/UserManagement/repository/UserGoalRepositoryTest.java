@@ -46,8 +46,8 @@ public class UserGoalRepositoryTest {
         userRepository.save(users);
 
         userGoals = new ArrayList<>();
-        userGoals.add(new UserGoal(users.get(0), 0, 0, 0, 0, 0, 0));
-        userGoals.add(new UserGoal(users.get(1), 0, 0, 1, 10, 20, 30));
+        userGoals.add(new UserGoal(users.get(0), 9, 9, 9, 9, 9, 9));
+        userGoals.add(new UserGoal(users.get(1), 11, 11, 11, 11, 11, 11));
         userGoalRepository.save(userGoals);
 
     }
