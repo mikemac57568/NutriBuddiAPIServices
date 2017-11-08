@@ -110,9 +110,9 @@ public class EatsController {
 		if(eats.size() > 0){
 		    response = new ResponseEntity<>(eats, HttpStatus.OK);
 		}
-//		else if(eats.size() == 0){
-//			response = new ResponseEntity<>("No records exist", HttpStatus.OK);
-//		}
+		else if(eats.size() == 0){
+			response = new ResponseEntity<>("No records exist", HttpStatus.OK);
+		}
 		return response;
 	}
 
