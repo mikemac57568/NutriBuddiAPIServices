@@ -23,27 +23,25 @@ public class UserGoalController {
     private Logger logger = LoggerFactory.getLogger(UserGoalController.class);
 
 
-/*    @GetMapping(path="/deleteUserGoal")
+    @GetMapping(path="/deleteUserGoal")
     @ResponseBody
-    public ResponseEntity<Object> deleteUserGoal(@RequestParam String email, @RequestParam String userGoal){
+    public ResponseEntity<Object> deleteUserGoal(@RequestParam String email){
         ResponseEntity response;
         User user;
 
         if(email.equals("") || email == null){
             response = new ResponseEntity("email must not be empty", HttpStatus.NOT_ACCEPTABLE);
-        } else if(userGoal == null){
-            response = new ResponseEntity("user goal cannot be empty", HttpStatus.NOT_ACCEPTABLE);
         }else {
              user = userRepository.findByEmail(email);
             if(user == null){
                 response = new ResponseEntity("user not found with given email", HttpStatus.NOT_ACCEPTABLE);
-            } else { //if(user.getEmail() != null || user.getEmail() != "" && userGoal != null)
-                userGoalRepository.deleteByUserIdAndGoal(user.getId(), userGoal);
+            } else {
+                userGoalRepository.deleteByUserId(user.getId());
                 response = new ResponseEntity("delete successful", HttpStatus.OK);
             }
         }
         return response;
-    }*/
+    }
 
 
 }

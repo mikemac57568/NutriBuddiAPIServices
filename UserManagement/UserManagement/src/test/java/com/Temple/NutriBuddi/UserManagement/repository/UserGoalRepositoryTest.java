@@ -36,7 +36,7 @@ public class UserGoalRepositoryTest {
     private String goal2 = "I want to hack NutriBuddi";
 
 
-/*    @Before
+    @Before
     public void setUp() throws Exception {
         users = new ArrayList<>();
         users.add(new User(email1, "it'sallaconspiracy;", "sugarcrazedstan", "stan",
@@ -46,8 +46,8 @@ public class UserGoalRepositoryTest {
         userRepository.save(users);
 
         userGoals = new ArrayList<>();
-        userGoals.add(new UserGoal(goal1, users.get(0)));
-        userGoals.add(new UserGoal(goal2, users.get(1)));
+        userGoals.add(new UserGoal(users.get(0), 0, 0, 0, 0, 0, 0));
+        userGoals.add(new UserGoal(users.get(1), 0, 0, 1, 10, 20, 30));
         userGoalRepository.save(userGoals);
 
     }
@@ -56,9 +56,9 @@ public class UserGoalRepositoryTest {
     public void deleteByGoalAndId() throws Exception {
         User user = userRepository.findByEmail(email1);
         log.info("email1: " + user.getEmail());
-        long status = userGoalRepository.deleteByUserIdAndGoal(user.getId(), goal1);
+        long status = userGoalRepository.deleteByUserId(user.getId());
         log.info("status: " + status);
         assertTrue(status == 1);
-    }*/
+    }
 
 }
