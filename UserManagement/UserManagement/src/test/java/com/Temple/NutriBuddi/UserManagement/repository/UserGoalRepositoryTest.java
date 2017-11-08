@@ -32,11 +32,9 @@ public class UserGoalRepositoryTest {
 
     private String email1 = "thecakeisalie@truths.com";
     private String email2 = "alice@RSA.com";
-    private String goal1 = "I want to eat more cake";
-    private String goal2 = "I want to hack NutriBuddi";
 
 
-/*    @Before
+    @Before
     public void setUp() throws Exception {
         users = new ArrayList<>();
         users.add(new User(email1, "it'sallaconspiracy;", "sugarcrazedstan", "stan",
@@ -46,19 +44,18 @@ public class UserGoalRepositoryTest {
         userRepository.save(users);
 
         userGoals = new ArrayList<>();
-        userGoals.add(new UserGoal(goal1, users.get(0)));
-        userGoals.add(new UserGoal(goal2, users.get(1)));
+        userGoals.add(new UserGoal(users.get(0), 9, 9, 9, 9, 9, 9));
+        userGoals.add(new UserGoal(users.get(1), 11, 11, 11, 11, 11, 11));
         userGoalRepository.save(userGoals);
 
     }
 
     @Test
-    public void deleteByGoalAndId() throws Exception {
+    public void findGoalByUserId() throws Exception {
         User user = userRepository.findByEmail(email1);
         log.info("email1: " + user.getEmail());
-        long status = userGoalRepository.deleteByUserIdAndGoal(user.getId(), goal1);
-        log.info("status: " + status);
-        assertTrue(status == 1);
-    }*/
-
+        UserGoal goal = userGoalRepository.findByUserId(user.getId());
+        assert(user.getId() == goal.getUser().getId());
+    }
+    
 }

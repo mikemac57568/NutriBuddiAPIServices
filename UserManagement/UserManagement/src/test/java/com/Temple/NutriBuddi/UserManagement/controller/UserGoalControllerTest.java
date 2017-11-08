@@ -36,7 +36,7 @@ public class UserGoalControllerTest {
     private String userAuthorization;
     private static final Logger log = LoggerFactory.getLogger(UserGoalControllerTest.class);
 
- /*   @Before
+    @Before
     public void setup() throws Exception {
 
         userAuthorization = "Basic " +
@@ -54,17 +54,137 @@ public class UserGoalControllerTest {
                 .param("age", "37")
                 .param("gender", "1"))
                 .andReturn().getResponse().getContentAsString();
+        
+        String response2 = mockMvc.perform(get("/user/addNewUser")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTesterWithGoal@tester.com")
+                .param("password", "qualitypasssword")
+                .param("password2", "qualitypasssword")
+                .param("userName", "Testy McTesterson")
+                .param("first", "Bill")
+                .param("last", "Bobaggins")
+                .param("height", "47")
+                .param("weight", "147")
+                .param("age", "37")
+                .param("gender", "1"))
+                .andReturn().getResponse().getContentAsString();
+        
+        String response3 = mockMvc.perform(get("/userGoal/addUserGoal")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTesterWithGoal@tester.com")
+                .param("protein", "9")
+                .param("carbs", "11")
+                .param("calories", "9")
+                .param("sodium", "11")
+                .param("totalFat", "9")
+                .param("weightGoal", "11"))
+                .andReturn().getResponse().getContentAsString();
     }
-
+    
+    @Test
+    public void addUserGoal() throws Exception {
+        mockMvc.perform(get("/userGoal/addUserGoal")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("protein", "9")
+                .param("carbs", "11")
+                .param("calories", "9")
+                .param("sodium", "11")
+                .param("totalFat", "9")
+                .param("weightGoal", "11")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+    }
+    
+    @Test
+    public void addUserGoalAlreadyExists() throws Exception {
+        mockMvc.perform(get("/userGoal/addUserGoal")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTesterWithGoal@tester.com")
+                .param("protein", "9")
+                .param("carbs", "11")
+                .param("calories", "9")
+                .param("sodium", "11")
+                .param("totalFat", "9")
+                .param("weightGoal", "11")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotAcceptable())
+                .andReturn().getResponse().getContentAsString();
+    }
+    
+    @Test
+    public void addUserGoalBadEmail() throws Exception {
+        mockMvc.perform(get("/userGoal/addUserGoal")
+                .header("Authorization", userAuthorization)
+                .param("email", "loser@tester.com")
+                .param("protein", "9")
+                .param("carbs", "11")
+                .param("calories", "9")
+                .param("sodium", "11")
+                .param("totalFat", "9")
+                .param("weightGoal", "11")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotAcceptable())
+                .andReturn().getResponse().getContentAsString();
+    }
+    
+    @Test
+    public void UpdateUserGoal() throws Exception {
+        mockMvc.perform(get("/userGoal/updateUserGoal")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTesterWithGoal@tester.com")
+                .param("protein", "11")
+                .param("carbs", "11")
+                .param("calories", "11")
+                .param("sodium", "11")
+                .param("totalFat", "11")
+                .param("weightGoal", "11")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+    }
+    
+    @Test
+    public void UpdateUserGoalDoesNotExist() throws Exception {
+        mockMvc.perform(get("/userGoal/updateUserGoal")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("protein", "11")
+                .param("carbs", "11")
+                .param("calories", "11")
+                .param("sodium", "11")
+                .param("totalFat", "11")
+                .param("weightGoal", "11")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotAcceptable())
+                .andReturn().getResponse().getContentAsString();
+    }
+    
+    @Test
+    public void UpdateUserGoalEmailDoesNotExist() throws Exception {
+        mockMvc.perform(get("/userGoal/updateUserGoal")
+                .header("Authorization", userAuthorization)
+                .param("email", "loser@tester.com")
+                .param("protein", "11")
+                .param("carbs", "11")
+                .param("calories", "11")
+                .param("sodium", "11")
+                .param("totalFat", "11")
+                .param("weightGoal", "11")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotAcceptable())
+                .andReturn().getResponse().getContentAsString();
+    }
+  
     @Test
     public void deleteUserGoal() throws Exception {
         mockMvc.perform(get("/userGoal/deleteUserGoal")
                 .header("Authorization", userAuthorization)
                 .param("email", "jUnitTester@tester.com")
-                .param("userGoal", "")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
-    }*/
+    }
 
 }
