@@ -57,5 +57,4 @@ public class UserGoalRepositoryTest {
         UserGoal goal = userGoalRepository.findByUserId(user.getId());
         assert(user.getId() == goal.getUser().getId());
     }
-    
 }

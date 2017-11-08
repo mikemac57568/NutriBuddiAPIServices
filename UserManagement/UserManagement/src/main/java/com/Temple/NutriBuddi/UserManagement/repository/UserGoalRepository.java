@@ -16,4 +16,10 @@ public interface UserGoalRepository extends CrudRepository<UserGoal, Long>{
 	
 	UserGoal findByUserId(int userId);
 
+    UserGoal findByUserId(int userId);
+
+    @Transactional
+    long deleteByUserId(int userId);
+    @Transactional
+    long deleteByUserEmail(String Email);
 }
