@@ -43,6 +43,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Eats> eats;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "user")
     private List<UserGoal> userGoals;
 

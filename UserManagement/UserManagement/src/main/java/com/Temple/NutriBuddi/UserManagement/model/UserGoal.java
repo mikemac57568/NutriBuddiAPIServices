@@ -1,5 +1,7 @@
 package com.Temple.NutriBuddi.UserManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -12,9 +14,17 @@ public class UserGoal {
 
     private String goal;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
+    public UserGoal(){}
+
+    public UserGoal(String goal, User user){
+        this.goal = goal;
+        this.user = user;
+    }
 
     //    private double weightChange;
 
