@@ -57,4 +57,13 @@ public class UserGoalRepositoryTest {
         UserGoal goal = userGoalRepository.findByUserId(user.getId());
         assert(user.getId() == goal.getUser().getId());
     }
+
+    @Test
+    public void deleteByGoalAndId() throws Exception {
+        User user = userRepository.findByEmail(email1);
+        log.info("email1: " + user.getEmail());
+        long status = userGoalRepository.deleteByUserId(user.getId());
+        log.info("status: " + status);
+        assertTrue(status == 1);
+    }
 }
