@@ -63,4 +63,33 @@ public class FoodController {
 		
 		return new ResponseEntity<>("Food added", HttpStatus.OK);
 	}
+	
+	@GetMapping(path="/addFood") // Map ONLY GET Requests
+	@ResponseBody
+	public ResponseEntity<Object> addFood (@RequestParam String foodName
+			, @RequestParam int calories
+			, @RequestParam int carbohydrates
+			, @RequestParam int fiber
+			, @RequestParam int iron
+			, @RequestParam int magnesium
+			, @RequestParam int phospherous
+			, @RequestParam int potassium
+			, @RequestParam int protein
+			, @RequestParam int satFat
+			, @RequestParam String servingUnit
+			, @RequestParam int sodium
+			, @RequestParam int sugar
+			, @RequestParam int totalFat
+			, @RequestParam int transFat
+			, @RequestParam int vitaminC
+			, @RequestParam int vitaminD
+			, @RequestParam int zinc) {
+	
+		Food food = new Food(foodName, servingUnit, calories, carbohydrates, fiber, iron, magnesium, phospherous, potassium, protein,
+				satFat, sodium, sugar, totalFat, transFat, vitaminC, vitaminD, zinc);
+			
+		foodRepository.save(food);
+		
+		return new ResponseEntity<>("Food added", HttpStatus.OK);
+	}
 }

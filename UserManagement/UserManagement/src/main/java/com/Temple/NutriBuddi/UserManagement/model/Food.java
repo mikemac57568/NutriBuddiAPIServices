@@ -64,10 +64,8 @@ public class Food {
 
 	public Food(){}
 
-	public Food(String foodName, String servingUnit, Integer calories, Integer protein, Integer totalFat,
-				Integer satFat, Integer transFat, Integer carbohydrates, Integer sodium, Integer sugar,
-				Integer fiber, Integer vitaminC, Integer vitaminD, Integer iron, Integer magnesium,
-				Integer phospherous, Integer potassium, Integer zinc) {
+	public Food(String foodName, String servingUnit, int calories, int carbohydrates, int fiber, int iron, int magnesium, int phospherous, 
+			int potassium, int protein,	int satFat, int sodium, int sugar, int totalFat, int transFat, int vitaminC, int vitaminD, int zinc) {
 		this.foodName = foodName;
 		this.servingUnit = servingUnit;
 		this.calories = calories;

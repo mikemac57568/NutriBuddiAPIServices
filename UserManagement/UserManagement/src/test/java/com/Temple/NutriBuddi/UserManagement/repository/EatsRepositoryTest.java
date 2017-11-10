@@ -116,7 +116,7 @@ public class EatsRepositoryTest {
 		//Use food id to find food item in list of eaten records
 		List<Eats> response = eatsRepository.findByFoodId(food.getId());
         log.info("findByFoodId Response: " + response);
-        assert(response.get(0).getFood().getProtein() == 100);
+        assert(response.get(0).getFood().getProtein() == 1);
         assert(response.get(0).getFood().getFoodName().equals(testFood));
 
 	}
