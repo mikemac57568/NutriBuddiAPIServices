@@ -79,6 +79,24 @@ public class EatsController {
 		}
 		return response;
 	}
+	
+	@GetMapping(path="/getEatsByEmail")
+	@ResponseBody
+	public ResponseEntity<Object> getEatsByEmail(@RequestParam String email){
+		ResponseEntity response;
+		List<Eats> eats;
+		if(email != null && email != ""){
+			try{
+				eats = eatsRepository.findByEmail(email);
+				response = new ResponseEntity<>(eats, HttpStatus.OK);
+			}catch(Exception e){
+				response = new ResponseEntity<>("Error with request", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			response = new ResponseEntity<>("Email cannot be empty", HttpStatus.NOT_ACCEPTABLE);
+		}
+		return response;
+	}
 
 
 	@GetMapping(path="/getEatsByDatesAndEmail")
