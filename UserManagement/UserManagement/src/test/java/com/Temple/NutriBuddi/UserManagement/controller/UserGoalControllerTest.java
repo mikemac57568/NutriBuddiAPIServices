@@ -187,4 +187,23 @@ public class UserGoalControllerTest {
                 .andReturn().getResponse().getContentAsString();
     }
 
+    @Test
+    public void getUserGoal() throws Exception {
+        mockMvc.perform(get("/userGoal/getUserGoals")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+    }
+
+    @Test
+    public void getAll() throws Exception {
+        mockMvc.perform(get("/userGoal/all")
+                .header("Authorization", userAuthorization)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+    }
+
 }

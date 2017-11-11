@@ -67,7 +67,7 @@ public class UserGoalController {
 		@RequestParam int calories,
 		@RequestParam int sodium,
 		@RequestParam int totalFat,
-		@RequestParam int weightGoal){
+            @RequestParam int weightGoal){
         
     	ResponseEntity response;
     	
@@ -120,4 +120,28 @@ public class UserGoalController {
     }
 
 
+    @GetMapping(path="/all")
+    public @ResponseBody Iterable<UserGoal> getAllUserGoals() {
+
+        return userGoalRepository.findAll();
+    }
+
+    @GetMapping(path="/getUserGoals")
+    @ResponseBody
+    public ResponseEntity<Object> getUserGoals(@RequestParam String email){
+        ResponseEntity response;
+        User user;
+
+        if(email.equals("") || email == null){
+            response = new ResponseEntity("email must not be empty", HttpStatus.NOT_ACCEPTABLE);
+        }else {
+            user = userRepository.findByEmail(email);
+            if(user == null){
+                response = new ResponseEntity("user not found with given email", HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                response = new ResponseEntity(userGoalRepository.findByUserId(user.getId()), HttpStatus.OK);
+            }
+        }
+        return response;
+    }
 }
