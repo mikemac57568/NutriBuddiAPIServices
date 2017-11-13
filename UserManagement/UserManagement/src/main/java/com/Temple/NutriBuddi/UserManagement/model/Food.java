@@ -1,9 +1,11 @@
 package com.Temple.NutriBuddi.UserManagement.model;
 
 import com.Temple.NutriBuddi.UserManagement.model.Eats;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +17,8 @@ public class Food {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-
+	
+	@Column(unique = true)
 	private String foodName;
 
 	private String servingUnit;
@@ -51,12 +54,37 @@ public class Food {
 	private Integer potassium;
 
 	private Integer zinc;
-	
+
+	@JsonBackReference
 	@OneToMany(mappedBy = "food")
     private List<Eats> eats;
 
 	@OneToMany(mappedBy="food")
 	private List<ObjectImage> objectImages;
+
+	public Food(){}
+
+	public Food(String foodName, String servingUnit, int calories, int carbohydrates, int fiber, int iron, int magnesium, int phospherous, 
+			int potassium, int protein,	int satFat, int sodium, int sugar, int totalFat, int transFat, int vitaminC, int vitaminD, int zinc) {
+		this.foodName = foodName;
+		this.servingUnit = servingUnit;
+		this.calories = calories;
+		this.protein = protein;
+		this.totalFat = totalFat;
+		this.satFat = satFat;
+		this.transFat = transFat;
+		this.carbohydrates = carbohydrates;
+		this.sodium = sodium;
+		this.sugar = sugar;
+		this.fiber = fiber;
+		this.vitaminC = vitaminC;
+		this.vitaminD = vitaminD;
+		this.iron = iron;
+		this.magnesium = magnesium;
+		this.phospherous = phospherous;
+		this.potassium = potassium;
+		this.zinc = zinc;
+	}
 
 	public Integer getId() {
 		return id;

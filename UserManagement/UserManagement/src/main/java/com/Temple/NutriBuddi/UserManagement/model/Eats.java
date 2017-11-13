@@ -1,12 +1,19 @@
 package com.Temple.NutriBuddi.UserManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.sql.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import java.util.Date;
 
 @Entity
 public class Eats {
@@ -15,16 +22,36 @@ public class Eats {
     private Integer id;
     
     private Integer numServings;
-
+    
+    @Column(name = "transaction_date", columnDefinition="DATETIME", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date transactionDate;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    
+
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "food_id")
     private Food food;
+
+    public Eats(){}
+
+    public Eats(User user, int numServings, Food food) {
+    	this.user = user;
+    	this.numServings = numServings;
+    	this.food = food;
+    	transactionDate = new Date();
+    }
+
+    public Eats(User user, int numServings, Food food, Date date) {
+        this.user = user;
+        this.numServings = numServings;
+        this.food = food;
+        transactionDate = date;
+    }
 
     public Integer getId() {
         return id;
@@ -64,5 +91,16 @@ public class Eats {
 
     public void setFood(Food food) {
         this.food = food;
+    }
+
+    @Override
+    public String toString() {
+        return "Eats{" +
+                "id=" + id +
+                ", numServings=" + numServings +
+                ", transactionDate=" + transactionDate +
+                ", user=" + user +
+                ", food=" + food +
+                '}';
     }
 }

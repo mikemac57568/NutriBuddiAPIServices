@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import java.util.logging.Logger;
 
 
-public class EmailValidationRule implements ValidationRule{
+public class AddNewEmailValidationRule implements ValidationRule{
 
     @Override
     public ValidationResponse validate(UserVO user) {

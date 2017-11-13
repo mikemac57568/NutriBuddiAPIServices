@@ -33,11 +33,11 @@ public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-	public String userAuthorization;
+	private String userAuthorization;
     private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
 
     @Before
-    public void setup() throws Exception, Exception {
+    public void setup() throws Exception {
 
         userAuthorization = "Basic " +
                 Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
@@ -95,7 +95,47 @@ public class UserControllerTest {
 
     @Test
     public void updateUser() throws Exception {
+        mockMvc.perform(get("/user/updateUser")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("password", "qualitypasssword")
+                .param("password2", "qualitypasssword")
+                .param("height", "50")
+                .param("weight", "1")
+                .param("age", "500")
+                .param("gender", "1"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+    }
 
+    @Test
+    public void updateUserWithNonMatchingPasswords() throws Exception {
+        mockMvc.perform(get("/user/updateUser")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("password", "1")
+                .param("password2", "2")
+                .param("height", "50")
+                .param("weight", "1")
+                .param("age", "500")
+                .param("gender", "1"))
+                .andExpect(status().isNotAcceptable())
+                .andReturn().getResponse().getContentAsString();
+    }
+
+    @Test
+    public void updateUserWithEmptyFields() throws Exception {
+        mockMvc.perform(get("/user/updateUser")
+                .header("Authorization", userAuthorization)
+                .param("email", "jUnitTester@tester.com")
+                .param("password", "2")
+                .param("password2", "2")
+                .param("height", "")
+                .param("weight", "")
+                .param("age", "")
+                .param("gender", ""))
+                .andExpect(status().isNotAcceptable())
+                .andReturn().getResponse().getContentAsString();
     }
 
     @Test
