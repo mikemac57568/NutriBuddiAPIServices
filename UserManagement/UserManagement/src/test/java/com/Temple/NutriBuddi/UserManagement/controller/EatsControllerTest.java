@@ -119,6 +119,15 @@ public class EatsControllerTest {
 	}
 
 	@Test
+	public void getEatsByEmail() throws Exception {
+    	String response = mockMvc.perform(get("/eats/getEatsByEmail")
+				.header("Authorization", authorization)
+				.param("email", "jUnitTester@tester.com"))
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+	}
+
+	@Test
 	public void getEatsByDateRangeAndEmail() throws Exception {
 		String response = mockMvc.perform(get("/eats/getEatsByDatesAndEmail")
 				.header("Authorization", authorization)
