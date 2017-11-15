@@ -3,15 +3,7 @@ package com.Temple.NutriBuddi.UserManagement.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import java.util.Date;
 
@@ -22,7 +14,15 @@ public class Eats {
     private Integer id;
     
     private Integer numServings;
-    
+
+    /*
+     * 0 for no
+     * 1 for yes
+     * 2 for unassigned
+     * optional
+     */
+    private Integer classificationValidity;
+
     @Column(name = "transaction_date", columnDefinition="DATETIME", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date transactionDate;
@@ -36,6 +36,11 @@ public class Eats {
     @ManyToOne
     @JoinColumn(name = "food_id")
     private Food food;
+
+    @JsonManagedReference
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     public Eats(){}
 
