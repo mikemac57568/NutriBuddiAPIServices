@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.sql.rowset.serial.SerialBlob;
+import javax.xml.ws.Response;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.logging.Logger;
@@ -84,5 +85,35 @@ public class ImageController {
         }
 
         return null;
+    }
+
+    @GetMapping(path="/deleteImage")
+    @ResponseBody
+    public ResponseEntity<Object> deleteImageResource (@RequestParam String email,
+                                                       @RequestParam String imageString,
+                                                       @RequestParam String fileName) {
+        ResponseEntity response = null;
+        User user;
+
+        if(imageString.equals("") || imageString.equals(null)){
+            response = new ResponseEntity("Image must not be empty", HttpStatus.NOT_ACCEPTABLE);
+        }
+        if(email.equals("") || email.equals(null)){
+            response = new ResponseEntity("Email must not be empty", HttpStatus.NOT_ACCEPTABLE);
+
+        }
+        if(fileName.equals("") || fileName.equals(null)){
+            response = new ResponseEntity("File name must not be empty", HttpStatus.NOT_ACCEPTABLE);
+
+        }
+
+        user = userRepository.findByEmail(email);
+        if(user == null){
+            response = new ResponseEntity("User not found with provided email", HttpStatus.CONFLICT);
+        }
+
+
+
+        return response;
     }
 }
