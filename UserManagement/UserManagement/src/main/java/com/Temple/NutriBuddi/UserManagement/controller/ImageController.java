@@ -1,6 +1,8 @@
 package com.Temple.NutriBuddi.UserManagement.controller;
 
+import com.Temple.NutriBuddi.UserManagement.model.Eats;
 import com.Temple.NutriBuddi.UserManagement.model.Food;
+import com.Temple.NutriBuddi.UserManagement.model.Image;
 import com.Temple.NutriBuddi.UserManagement.model.User;
 import com.Temple.NutriBuddi.UserManagement.repository.EatsRepository;
 import com.Temple.NutriBuddi.UserManagement.repository.FoodRepository;
@@ -26,65 +28,86 @@ import java.util.logging.Logger;
 public class ImageController {
 
     @Autowired
-    ImageRepository imageRepository;
+    private ImageRepository imageRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    EatsRepository eatsRepository;
+    private EatsRepository eatsRepository;
     @Autowired
-    FoodRepository foodRepository;
+    private FoodRepository foodRepository;
 
     private static Logger LOG = Logger.getLogger(ImageController.class.getName());
 
 
-    @GetMapping(path="/addImage") // Map ONLY GET Requests
+    @GetMapping(path="/addNewImage") // Map ONLY GET Requests
     @ResponseBody
-    public ResponseEntity<Object> getImageAsResource (@RequestParam String email,
+    public ResponseEntity<Object> addNewImage(@RequestParam String email,
                                                       @RequestParam String imageString,
                                                       @RequestParam String foodName,
-                                                      @RequestParam String fileName) {
+                                                      @RequestParam String fileName,
+                                                      @RequestParam String numServing) {
         ResponseEntity response;
         Food food;
         User user;
-        if(imageString.equals("") || imageString.equals(null)){
+        Eats eats;
+        Image image;
+
+        int classificationNumber;
+        if(imageString.equals("") || imageString == null){
             response = new ResponseEntity("Image must not be empty", HttpStatus.NOT_ACCEPTABLE);
-        }
-        if(email.equals("") || email.equals(null)){
+        } else if(email.equals("") || email == null){
             response = new ResponseEntity("Email must not be empty", HttpStatus.NOT_ACCEPTABLE);
 
-        }
-        if(foodName.equals("") || foodName.equals(null)){
+        } else if(foodName.equals("") || foodName == null){
             response = new ResponseEntity("Food name must not be empty", HttpStatus.NOT_ACCEPTABLE);
 
-        }
-        if(fileName.equals("") || fileName.equals(null)){
+        } else if(fileName.equals("") || fileName == null){
             response = new ResponseEntity("File name must not be empty", HttpStatus.NOT_ACCEPTABLE);
 
-        }
-
-        food = foodRepository.findByFoodName(foodName);
-        if(food == null){
-            //set number
         } else {
 
+            if (foodName.toLowerCase().equals("unknown")) {
+                classificationNumber = 0;
+            } else if (foodName.length() > 0) {
+                classificationNumber = 1;
+            } else {
+                classificationNumber = 2;
+            }
+            food = foodRepository.findByFoodName(foodName);
+            if (food == null) {
+                //Check if it is a valid food by checking online using foodName
+
+                //if it is a real type of food, then add it to the database
+
+                //else if it is unknown add food group
+
+                //else if it's fake tell user that this isn't a known/real food item
+                food = new Food("Unknown", "mg", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            }
+            response = null;        //TODO: Delete this for refactor and fill out food
+            user = userRepository.findByEmail(email);
+            if (user == null) {
+                response = new ResponseEntity("User not found with provided email", HttpStatus.CONFLICT);
+            }
+
+            try {
+                byte[] bytes = imageString.getBytes();
+                Blob imageBlob = new SerialBlob(bytes);
+                image = new Image(foodName, fileName, imageBlob);
+                eats = new Eats(user, Integer.parseInt(numServing), food, image, classificationNumber);
+                imageRepository.save(image);
+                eatsRepository.save(eats);
+                if (imageString != null)
+                    response = new ResponseEntity("Image added", HttpStatus.OK);
+            } catch (SQLException e) {
+                LOG.info(e.getMessage());
+                response = new ResponseEntity("Error converting uri image", HttpStatus.CONFLICT);
+            } catch (NumberFormatException e) {
+                LOG.info(e.getMessage());
+                response = new ResponseEntity("Error casting number of servings", HttpStatus.CONFLICT);
+            }
         }
-
-        user = userRepository.findByEmail(email);
-        if(user == null){
-            response = new ResponseEntity("User not found with provided email", HttpStatus.CONFLICT);
-        }
-
-
-        byte[] bytes = imageString.getBytes();
-        try{
-            Blob blob = new SerialBlob(bytes);
-
-        }catch(SQLException e){
-            LOG.info(e.getMessage());
-            response = new ResponseEntity("Error converting uri image", HttpStatus.CONFLICT);
-        }
-
-        return null;
+        return response;
     }
 
     @GetMapping(path="/deleteImage")
@@ -95,14 +118,14 @@ public class ImageController {
         ResponseEntity response = null;
         User user;
 
-        if(imageString.equals("") || imageString.equals(null)){
+        if(imageString.equals("") || imageString  == null){
             response = new ResponseEntity("Image must not be empty", HttpStatus.NOT_ACCEPTABLE);
         }
-        if(email.equals("") || email.equals(null)){
+        if(email.equals("") || email == null){
             response = new ResponseEntity("Email must not be empty", HttpStatus.NOT_ACCEPTABLE);
 
         }
-        if(fileName.equals("") || fileName.equals(null)){
+        if(fileName.equals("") || fileName == null){
             response = new ResponseEntity("File name must not be empty", HttpStatus.NOT_ACCEPTABLE);
 
         }

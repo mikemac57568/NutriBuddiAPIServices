@@ -33,11 +33,19 @@ public class Image {
 
     public Image(){}
 
+    public Image(String foodName, String fileName, Blob imageBlob) {
+        this.foodName = foodName;
+        this.fileName = fileName;
+        this.imageBlob = imageBlob;
+        this.transactionDate = new Date();
+    }
+
     public Image(String foodName, String fileName, Blob imageBlob, Eats eats) {
         this.foodName = foodName;
         this.fileName = fileName;
         this.imageBlob = imageBlob;
         this.eats = eats;
+        this.transactionDate = new Date();
     }
 
     public Image(String foodName, String fileName, Blob imageBlob, String geoLocation, Eats eats) {
@@ -46,6 +54,7 @@ public class Image {
         this.imageBlob = imageBlob;
         this.geoLocation = geoLocation;
         this.eats = eats;
+        this.transactionDate = new Date();
     }
 
     public int getId() {

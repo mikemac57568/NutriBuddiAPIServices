@@ -48,14 +48,33 @@ public class Eats {
     	this.user = user;
     	this.numServings = numServings;
     	this.food = food;
-    	transactionDate = new Date();
+    	this.transactionDate = new Date();
+    }
+
+    public Eats(User user, int numServings, Food food, Image image) {
+        this.user = user;
+        this.numServings = numServings;
+        this.food = food;
+        this.transactionDate = new Date();
+        this.image = image;
+
+    }
+
+    public Eats(User user, int numServings, Food food, Image image, int classificationValidity) {
+        this.user = user;
+        this.numServings = numServings;
+        this.food = food;
+        this.transactionDate = new Date();
+        this.image = image;
+        this.classificationValidity = classificationValidity;
+
     }
 
     public Eats(User user, int numServings, Food food, Date date) {
         this.user = user;
         this.numServings = numServings;
         this.food = food;
-        transactionDate = date;
+        this.transactionDate = date;
     }
 
     public Integer getId() {
