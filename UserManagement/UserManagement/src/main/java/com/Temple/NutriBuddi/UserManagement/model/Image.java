@@ -14,12 +14,9 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String foodName;    //input by user if all else fails
+    private String foodName;
 
     private String fileName;
-
-    @Lob
-    private Blob imageBlob;
 
     @Column(name = "transaction_date", columnDefinition="DATETIME", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -33,25 +30,22 @@ public class Image {
 
     public Image(){}
 
-    public Image(String foodName, String fileName, Blob imageBlob) {
+    public Image(String foodName, String fileName) {
         this.foodName = foodName;
         this.fileName = fileName;
-        this.imageBlob = imageBlob;
         this.transactionDate = new Date();
     }
 
-    public Image(String foodName, String fileName, Blob imageBlob, Eats eats) {
+    public Image(String foodName, String fileName, Eats eats) {
         this.foodName = foodName;
         this.fileName = fileName;
-        this.imageBlob = imageBlob;
         this.eats = eats;
         this.transactionDate = new Date();
     }
 
-    public Image(String foodName, String fileName, Blob imageBlob, String geoLocation, Eats eats) {
+    public Image(String foodName, String fileName, String geoLocation, Eats eats) {
         this.foodName = foodName;
         this.fileName = fileName;
-        this.imageBlob = imageBlob;
         this.geoLocation = geoLocation;
         this.eats = eats;
         this.transactionDate = new Date();
@@ -79,14 +73,6 @@ public class Image {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public Blob getImageBlob() {
-        return imageBlob;
-    }
-
-    public void setImageBlob(Blob imageBlob) {
-        this.imageBlob = imageBlob;
     }
 
     public Date getTransactionDate() {
