@@ -38,9 +38,9 @@ public class UserGoalRepositoryTest {
     public void setUp() throws Exception {
         users = new ArrayList<>();
         users.add(new User(email1, "it'sallaconspiracy;", "sugarcrazedstan", "stan",
-                "theman", 6, 180, 30, 1));
+                "theman", 6, 180, 30, "M"));
         users.add(new User(email2, "bob-didn't-encrypt-his-password", "IBrokeRSA", "Alice",
-                "NotBob", 5, 110, 25, 0));
+                "NotBob", 5, 110, 25, "F"));
         userRepository.save(users);
 
         userGoals = new ArrayList<>();

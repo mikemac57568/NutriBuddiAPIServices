@@ -67,7 +67,7 @@ public class ImageControllerTest {
     public void setUp() throws Exception {
         authorization = "Basic " + Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
         testEmail1 = "jUnitTester@tester.com";
-        User user = new User(testEmail1, "qualitypasssword;","username1", "boo","blah", 5, 123, 26, 1);
+        User user = new User(testEmail1, "qualitypasssword;","username1", "boo","blah", 5, 123, 26, "M");
         userRepository.save(user);
         testFood1 = "quantumKumquat";
         Food quantumKumquat = new Food(testFood1, "mg", 150, 2, 3, 4,5, 6, 7, 21, 23, 99, 53, 15, 10, 10, 69, 12);

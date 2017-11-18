@@ -65,8 +65,7 @@ public class UserController {
 		int h = Integer.parseInt(height);
 		int w = Integer.parseInt(weight);
 		int a = Integer.parseInt(age);
-		int g = Integer.parseInt(gender);
-        User user = new User(email, password, userName, first, last, h, w, a, g);
+        User user = new User(email, password, userName, first, last, h, w, a, gender);
 
 		userRepository.save(user);
 		return new ResponseEntity<>("User added", HttpStatus.OK);
@@ -107,7 +106,7 @@ public class UserController {
 		user.setHeight(Integer.parseInt(height));
 		user.setWeight(Integer.parseInt(weight));
 		user.setAge(Integer.parseInt(age));
-		user.setGender(Integer.parseInt(gender));
+		user.setGender(gender);
 		userRepository.save(user);
 		return new ResponseEntity<>("User Updated", HttpStatus.OK);
 	}

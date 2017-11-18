@@ -29,14 +29,14 @@ public class UserRepositoryTest {
     @Before
     public void setup(){
         expectedUser = new User("test1@test.com", "asdfjkl;", "username1", "boo",
-                                "blah", 5, 123, 26, 1);
+                                "blah", 5, 123, 26, "N");
         //Populate db entries to insert
         users = new ArrayList<>();
         users.add(new User("something@23532.com", "qwerty;", "something", "why",
-                           "what", 13, 200, 53, 2));
+                           "what", 13, 200, 53, "F"));
         users.add(expectedUser);
         users.add(new User("deleteme@23532.com", "lkljfsfdg;", "llaf", "why",
-                "what", 13, 200, 53, 2));
+                "what", 13, 200, 53, "B"));
         userRepository.save(users);
     }
 

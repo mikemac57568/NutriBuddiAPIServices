@@ -56,9 +56,9 @@ public class EatsRepositoryTest {
 		users = new ArrayList<>();
 		//Insert test data into user repository
 		users.add(new User(testEmail, "thisisatest;", "test1", "boo",
-				"blah", 5, 180, 30, 1));
+				"blah", 5, 180, 30, "F"));
 		users.add(new User(testEmail2, "thisisnotatest;", "pencilpusher", "john",
-				"wick", 6, 180, 42, 1));
+				"wick", 6, 180, 42, "M"));
 		userRepository.save(users);
 
 
