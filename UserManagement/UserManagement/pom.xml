@@ -67,14 +67,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- The spring-aop module provides an AOP Alliance-compliant aspect-oriented
-			programming implementation allowing you to define -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>4.1.6.RELEASE</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>

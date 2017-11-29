@@ -35,6 +35,12 @@ public class FoodController {
 		return new ResponseEntity<>(foodRepository.findByFoodName(foodName), HttpStatus.OK);
 	}
 
+	@GetMapping(path="/getAllFoods")
+	public @ResponseBody Iterable<Food> getAllFoods() {
+
+		return foodRepository.findAll();
+	}
+
 	@GetMapping(path="/addTestFood") // Map ONLY GET Requests
 	@ResponseBody
 	public ResponseEntity<Object> addTestFood () {

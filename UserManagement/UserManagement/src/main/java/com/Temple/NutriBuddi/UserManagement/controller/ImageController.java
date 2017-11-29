@@ -122,18 +122,67 @@ public class ImageController {
         ResponseEntity response = null;
         User user;
 
-
         if(email.equals("") || email == null){
             response = new ResponseEntity<>("Email must not be empty", HttpStatus.NOT_ACCEPTABLE);
         }
         if(fileName.equals("") || fileName == null){
             response = new ResponseEntity<>("File name must not be empty", HttpStatus.NOT_ACCEPTABLE);
-
         }
 
         user = userRepository.findByEmail(email);
         if(user == null){
             response = new ResponseEntity<>("User not found with provided email", HttpStatus.CONFLICT);
+        }
+
+        try{
+            imageRepository.deleteByFileName(fileName);
+        }catch(Exception e){
+            response = new ResponseEntity<>("Image not found", HttpStatus.BAD_REQUEST);
+        }
+
+        return response;
+    }
+
+    @GetMapping(path="/updateImage")
+    @ResponseBody
+    public ResponseEntity<Object> updateImageResource (@RequestParam String email,
+                                                       @RequestParam String oldFileName,
+                                                       @RequestParam String newFileName,
+                                                       @RequestParam String latitude,
+                                                       @RequestParam String longitude) {
+        Image currentImage;
+        ResponseEntity response = null;
+        User user;
+
+        if(email.equals("") || email == null){
+            response = new ResponseEntity<>("Email must not be empty", HttpStatus.NOT_ACCEPTABLE);
+        }
+        if(oldFileName.equals("") || oldFileName == null){
+            response = new ResponseEntity<>("File name must not be empty", HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        user = userRepository.findByEmail(email);
+        if(user == null){
+            response = new ResponseEntity<>("User not found with provided email", HttpStatus.CONFLICT);
+        }
+
+        try{
+            currentImage = imageRepository.findByFileName(oldFileName);
+            currentImage.setFileName(newFileName);
+
+            if(latitude != "" || longitude != ""){
+                try{
+                    Double lat = Double.parseDouble(latitude);
+                    Double lng = Double.parseDouble(longitude);
+
+                    currentImage.setLatitude(lat);
+                    currentImage.setLongitude(lng);
+                } catch (IllegalFormatException e){
+                    return new ResponseEntity<>("Coordinates must be a number", HttpStatus.NOT_ACCEPTABLE);
+                }
+            }
+        }catch(Exception e){
+            response = new ResponseEntity<>("Image not found", HttpStatus.BAD_REQUEST);
         }
 
         return response;

@@ -106,6 +106,29 @@ public class ImageControllerTest {
 
     @Test
     public void deleteImageResource() throws Exception {
+        addNewImage();
+        String response = mockMvc.perform(get("/imageClassifier/deleteImage")
+                .header("Authorization", authorization)
+                .param("email", testEmail1)
+                .param("fileName", "ChihuahuaOrMuffin"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        log.info("response: " + response);
+    }
+
+    @Test
+    public void updateImageResource() throws Exception {
+        addNewImage();
+        String response = mockMvc.perform(get("/imageClassifier/updateImage")
+                .header("Authorization", authorization)
+                .param("email", testEmail1)
+                .param("oldFileName", "ChihuahuaOrMuffin")
+                .param("newFileName", "MuffinOrChihuahua")
+                .param("latitude", "")
+                .param("longitude", ""))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        log.info("response: " + response);
     }
 
     @Test
@@ -118,5 +141,4 @@ public class ImageControllerTest {
                 .andReturn().getResponse().getContentAsString();
         log.info("response: " + response);
     }
-
 }

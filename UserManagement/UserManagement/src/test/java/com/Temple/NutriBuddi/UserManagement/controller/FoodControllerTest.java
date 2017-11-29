@@ -96,5 +96,12 @@ public class FoodControllerTest {
                 .andReturn().getResponse().getContentAsString();
     	
     }
-    
+
+    @Test
+	public void getAllFoods() throws Exception {
+		String response = mockMvc.perform(get("/food/getAllFoods")
+				.header("Authorization", authorization))
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+	}
 }
