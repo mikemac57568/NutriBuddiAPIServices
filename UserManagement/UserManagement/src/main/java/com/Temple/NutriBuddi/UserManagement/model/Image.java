@@ -22,7 +22,9 @@ public class Image {
     @Temporal(TemporalType.TIMESTAMP)
     private Date transactionDate;
 
-    private String geoLocation; //Temporary, change to location in future reference
+    private double latitude;
+
+    private double longitude;
 
     @JsonBackReference
     @OneToOne(mappedBy = "image")
@@ -43,11 +45,11 @@ public class Image {
         this.transactionDate = new Date();
     }
 
-    public Image(String foodName, String fileName, String geoLocation, Eats eats) {
+    public Image(String foodName, String fileName, double latitude, double longitude) {
         this.foodName = foodName;
         this.fileName = fileName;
-        this.geoLocation = geoLocation;
-        this.eats = eats;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.transactionDate = new Date();
     }
 
@@ -83,12 +85,20 @@ public class Image {
         this.transactionDate = transactionDate;
     }
 
-    public String getGeoLocation() {
-        return geoLocation;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setGeoLocation(String geoLocation) {
-        this.geoLocation = geoLocation;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public Eats getEats() {

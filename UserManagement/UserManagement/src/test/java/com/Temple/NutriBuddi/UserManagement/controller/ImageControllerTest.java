@@ -81,11 +81,27 @@ public class ImageControllerTest {
                 .param("email", testEmail1)
                 .param("foodName", testFood1)
                 .param("fileName", "ChihuahuaOrMuffin")
-                .param("numServing", "100"))
+                .param("numServing", "100")
+                .param("latitude", "")
+                .param("longitude", ""))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.info("response: " + response);
+    }
 
+    @Test
+    public void addNewImageWithLocation() throws Exception {
+        String response = mockMvc.perform(get("/imageClassifier/addNewImage")
+                .header("Authorization", authorization)
+                .param("email", testEmail1)
+                .param("foodName", testFood1)
+                .param("fileName", "ChihuahuaOrMuffin")
+                .param("numServing", "100")
+                .param("latitude", "73293.2323")
+                .param("longitude", "123432.32"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        log.info("response: " + response);
     }
 
     @Test

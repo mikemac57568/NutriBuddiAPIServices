@@ -22,6 +22,7 @@ import javax.xml.ws.Response;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,13 +47,16 @@ public class ImageController {
     public ResponseEntity<Object> addNewImage(@RequestParam String email,
                                               @RequestParam String foodName,
                                               @RequestParam String fileName,
-                                              @RequestParam String numServing) {
+                                              @RequestParam String numServing,
+                                              @RequestParam String latitude,
+                                              @RequestParam String longitude) {
         ResponseEntity response;
         Food food;
         User user;
         Eats eats;
         Image image;
-
+        double lat;
+        double lng;
         int classificationNumber;
         if(email.equals("") || email == null){
             response = new ResponseEntity<>("Email must not be empty", HttpStatus.NOT_ACCEPTABLE);
@@ -67,6 +71,7 @@ public class ImageController {
             } else  {
                 classificationNumber = 1;   //known food item
             }
+
             food = foodRepository.findByFoodName(foodName);
             if (food == null) {
                 //Check if it is a valid food by checking online using foodName
@@ -82,11 +87,23 @@ public class ImageController {
 
             user = userRepository.findByEmail(email);
             if (user == null) {
-                response = new ResponseEntity<>("User not found with provided email", HttpStatus.CONFLICT);
+                return new ResponseEntity<>("User not found with provided email", HttpStatus.CONFLICT);
             }
+
             try {
                 image = new Image(foodName, fileName);
                 eats = new Eats(user, Integer.parseInt(numServing), food, image, classificationNumber);
+
+                if(latitude != "" || longitude != ""){
+                    try{
+                        lat = Double.parseDouble(latitude);
+                        lng = Double.parseDouble(longitude);
+                        image = new Image(foodName, fileName, lat, lng);
+                    } catch (IllegalFormatException e){
+                        return new ResponseEntity<>("Coordinates must be a number", HttpStatus.NOT_ACCEPTABLE);
+                    }
+                }
+
                 imageRepository.save(image);
                 eatsRepository.save(eats);
                 response = new ResponseEntity<>("Image saved", HttpStatus.OK);
