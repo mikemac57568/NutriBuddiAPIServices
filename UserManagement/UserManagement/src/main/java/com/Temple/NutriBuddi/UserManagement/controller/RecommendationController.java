@@ -37,7 +37,7 @@ public class RecommendationController {
     static Logger LOG = Logger.getLogger(RecommendationController.class.getName());
 
 
-    @GetMapping(path = "recommendation")
+    @GetMapping(path = "/recommendation")
     @ResponseBody
     public ResponseEntity<Object> getRecommendation(@RequestParam String email){
         ResponseEntity<Object> response;
