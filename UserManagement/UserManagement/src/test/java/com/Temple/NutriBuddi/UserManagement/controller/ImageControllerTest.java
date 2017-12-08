@@ -59,7 +59,7 @@ public class ImageControllerTest {
     private String authorization;
     private String testEmail1;
     private String testFood1;
-
+    private String unknownFood;
     private Logger log = LoggerFactory.getLogger(ImageControllerTest.class);
 
 
@@ -70,6 +70,7 @@ public class ImageControllerTest {
         User user = new User(testEmail1, "qualitypasssword;","username1", "boo","blah", 5, 123, 26, "M");
         userRepository.save(user);
         testFood1 = "quantumKumquat";
+        unknownFood = "somethingsomething";
         Food quantumKumquat = new Food(testFood1, "mg", 150, 2, 3, 4,5, 6, 7, 21, 23, 99, 53, 15, 10, 10, 69, 12);
         foodRepository.save(quantumKumquat);
     }
@@ -99,6 +100,21 @@ public class ImageControllerTest {
                 .param("numServing", "100")
                 .param("latitude", "73293.2323")
                 .param("longitude", "123432.32"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        log.info("response: " + response);
+    }
+
+    @Test
+    public void addNewImageWithUnknownFood() throws Exception {
+        String response = mockMvc.perform(get("/imageClassifier/addNewImage")
+                .header("Authorization", authorization)
+                .param("email", testEmail1)
+                .param("foodName", unknownFood)
+                .param("fileName", "i have no clue what this abomination is")
+                .param("numServing", "100")
+                .param("latitude", "23192.23")
+                .param("longitude", "12432.32"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.info("response: " + response);

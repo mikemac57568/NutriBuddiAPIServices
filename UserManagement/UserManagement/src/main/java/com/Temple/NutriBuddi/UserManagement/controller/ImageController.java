@@ -74,15 +74,17 @@ public class ImageController {
 
             food = foodRepository.findByFoodName(foodName);
             if (food == null) {
+                //TODO: add ability to self-heal by pulling & parsing USDA database json;
                 //Check if it is a valid food by checking online using foodName
-
                 //if it is a real type of food, then add it to the database
-
                 //else if it is unknown add food group
-
                 //else if it's fake tell user that this isn't a known/real food item
 
-                food = new Food("Unknown", "mg", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                //check if unknown field exists; if not, create it in food database
+                if (foodRepository.findByFoodName("unknown") == null) {
+                    food = new Food("unknown", "mg", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                    foodRepository.save(food);  //save because id isn't assigned to food else cascade error
+                }
             }
 
             user = userRepository.findByEmail(email);
@@ -92,7 +94,6 @@ public class ImageController {
 
             try {
                 image = new Image(foodName, fileName);
-                eats = new Eats(user, Integer.parseInt(numServing), food, image, classificationNumber);
 
                 if(latitude != "" || longitude != ""){
                     try{
@@ -105,6 +106,7 @@ public class ImageController {
                 }
 
                 imageRepository.save(image);
+                eats = new Eats(user, Integer.parseInt(numServing), food, image, classificationNumber);
                 eatsRepository.save(eats);
                 response = new ResponseEntity<>("Image saved", HttpStatus.OK);
             } catch (NumberFormatException e) {
