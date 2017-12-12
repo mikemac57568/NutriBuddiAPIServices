@@ -17,7 +17,7 @@ public class Food {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-	
+
 	@Column(unique = true)
 	private String foodName;
 
@@ -25,35 +25,35 @@ public class Food {
 
 	private Integer calories;
 
-	private Integer protein;
+	private Double protein;
 
-	private Integer totalFat;
+	private Double totalFat;
 
-	private Integer satFat;
+	private Double satFat;
 
-	private Integer transFat;
+	private Double transFat;
 
-	private Integer carbohydrates;
+	private Double carbohydrates;
 
-	private Integer sodium;
+	private Double sodium;
 
-	private Integer sugar;
+	private Double sugar;
 
-	private Integer fiber;
+	private Double fiber;
 
-	private Integer vitaminC;
+	private Double vitaminC;
 
-	private Integer vitaminD;
+	private Double vitaminD;
 
-	private Integer iron;
+	private Double iron;
 
-	private Integer magnesium;
+	private Double magnesium;
 
-	private Integer phospherous;
+	private Double phospherous;
 
-	private Integer potassium;
+	private Double potassium;
 
-	private Integer zinc;
+	private Double zinc;
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "food")
@@ -64,8 +64,8 @@ public class Food {
 
 	public Food(){}
 
-	public Food(String foodName, String servingUnit, int calories, int carbohydrates, int fiber, int iron, int magnesium, int phospherous, 
-			int potassium, int protein,	int satFat, int sodium, int sugar, int totalFat, int transFat, int vitaminC, int vitaminD, int zinc) {
+	public Food(String foodName, String servingUnit, int calories, double carbohydrates, double fiber, double iron, double magnesium, double phospherous,
+				double potassium, double protein,	double satFat, double sodium, double sugar, double totalFat, double transFat, double vitaminC, double vitaminD, double zinc) {
 		this.foodName = foodName;
 		this.servingUnit = servingUnit;
 		this.calories = calories;
@@ -110,123 +110,123 @@ public class Food {
 		this.calories = calories;
 	}
 
-	public Integer getProtein() {
+	public Double getProtein() {
 		return protein;
 	}
 
-	public void setProtein(Integer protein) {
+	public void setProtein(Double protein) {
 		this.protein = protein;
 	}
 
-	public Integer getTotalFat() {
+	public Double getTotalFat() {
 		return totalFat;
 	}
 
-	public void setTotalFat(Integer totalFat) {
+	public void setTotalFat(Double totalFat) {
 		this.totalFat = totalFat;
 	}
 
-	public Integer getSatFat() {
+	public Double getSatFat() {
 		return satFat;
 	}
 
-	public void setSatFat(Integer satFat) {
+	public void setSatFat(Double satFat) {
 		this.satFat = satFat;
 	}
 
-	public Integer getTransFat() {
+	public Double getTransFat() {
 		return transFat;
 	}
 
-	public void setTransFat(Integer transFat) {
+	public void setTransFat(Double transFat) {
 		this.transFat = transFat;
 	}
 
-	public Integer getCarbohydrates() {
+	public Double getCarbohydrates() {
 		return carbohydrates;
 	}
 
-	public void setCarbohydrates(Integer carbohydrates) {
+	public void setCarbohydrates(Double carbohydrates) {
 		this.carbohydrates = carbohydrates;
 	}
 
-	public Integer getSodium() {
+	public Double getSodium() {
 		return sodium;
 	}
 
-	public void setSodium(Integer sodium) {
+	public void setSodium(Double sodium) {
 		this.sodium = sodium;
 	}
 
-	public Integer getSugar() {
+	public Double getSugar() {
 		return sugar;
 	}
 
-	public void setSugar(Integer sugar) {
+	public void setSugar(Double sugar) {
 		this.sugar = sugar;
 	}
 
-	public Integer getFiber() {
+	public Double getFiber() {
 		return fiber;
 	}
 
-	public void setFiber(Integer fiber) {
+	public void setFiber(Double fiber) {
 		this.fiber = fiber;
 	}
 
-	public Integer getVitaminC() {
+	public Double getVitaminC() {
 		return vitaminC;
 	}
 
-	public void setVitaminC(Integer vitaminC) {
+	public void setVitaminC(Double vitaminC) {
 		this.vitaminC = vitaminC;
 	}
 
-	public Integer getVitaminD() {
+	public Double getVitaminD() {
 		return vitaminD;
 	}
 
-	public void setVitaminD(Integer vitaminD) {
+	public void setVitaminD(Double vitaminD) {
 		this.vitaminD = vitaminD;
 	}
 
-	public Integer getIron() {
+	public Double getIron() {
 		return iron;
 	}
 
-	public void setIron(Integer iron) {
+	public void setIron(Double iron) {
 		this.iron = iron;
 	}
 
-	public Integer getMagnesium() {
+	public Double getMagnesium() {
 		return magnesium;
 	}
 
-	public void setMagnesium(Integer magnesium) {
+	public void setMagnesium(Double magnesium) {
 		this.magnesium = magnesium;
 	}
 
-	public Integer getPhospherous() {
+	public Double getPhospherous() {
 		return phospherous;
 	}
 
-	public void setPhospherous(Integer phospherous) {
+	public void setPhospherous(Double phospherous) {
 		this.phospherous = phospherous;
 	}
 
-	public Integer getPotassium() {
+	public Double getPotassium() {
 		return potassium;
 	}
 
-	public void setPotassium(Integer potassium) {
+	public void setPotassium(Double potassium) {
 		this.potassium = potassium;
 	}
 
-	public Integer getZinc() {
+	public Double getZinc() {
 		return zinc;
 	}
 
-	public void setZinc(Integer zinc) {
+	public void setZinc(Double zinc) {
 		this.zinc = zinc;
 	}
 
@@ -237,7 +237,5 @@ public class Food {
 	public void setFoodName(String foodName) {
 		this.foodName = foodName;
 	}
-	
-	
 }
 	

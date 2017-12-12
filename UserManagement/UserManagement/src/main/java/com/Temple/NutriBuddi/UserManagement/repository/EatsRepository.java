@@ -4,12 +4,13 @@ import com.Temple.NutriBuddi.UserManagement.model.Eats;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 
-public interface EatsRepository extends CrudRepository<Eats, Long>, QueryByExampleExecutor<Eats> {
+public interface EatsRepository extends JpaRepository<Eats, Long>, QueryByExampleExecutor<Eats> {
 
 	List<Eats> findByUserId(int userId);
 	List<Eats> findByFoodId(int foodId);

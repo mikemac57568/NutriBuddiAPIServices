@@ -133,7 +133,4 @@ public class EatsController {
 		}
 		return response;
 	}
-
-
-
 }

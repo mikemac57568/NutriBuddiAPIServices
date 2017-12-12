@@ -37,7 +37,7 @@ public class User {
     
     private int age;
     
-    private int gender;
+    private String gender;
 
     @JsonBackReference
     @OneToMany(mappedBy = "user")
@@ -49,7 +49,7 @@ public class User {
 
 	public User(){}
 
-	public User(String email, String password, String userName, String firstName, String lastName, int height, int weight, int age, int gender) {
+	public User(String email, String password, String userName, String firstName, String lastName, int height, int weight, int age, String gender) {
 		this.email = email;
 		this.password = password;
 		this.userName = userName;
@@ -61,7 +61,7 @@ public class User {
 		this.gender = gender;
 	}
 
-	public User(String email, String password, int height, int weight, int age, int gender) {
+	public User(String email, String password, int height, int weight, int age, String gender) {
 		this.email = email;
 		this.password = password;
 		this.userName = userName;
@@ -74,7 +74,7 @@ public class User {
 	}
 
 
-	public User(String email, String password, String userName, String firstName, String lastName, int height, int weight, int age, int gender, List<Eats> eats, List<UserGoal> userGoals) {
+	public User(String email, String password, String userName, String firstName, String lastName, int height, int weight, int age, String gender, List<Eats> eats, List<UserGoal> userGoals) {
 		this.email = email;
 		this.password = password;
 		this.userName = userName;
@@ -152,11 +152,11 @@ public class User {
 		this.age = age;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

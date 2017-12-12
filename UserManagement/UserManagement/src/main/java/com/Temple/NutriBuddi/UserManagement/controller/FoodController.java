@@ -35,6 +35,12 @@ public class FoodController {
 		return new ResponseEntity<>(foodRepository.findByFoodName(foodName), HttpStatus.OK);
 	}
 
+	@GetMapping(path="/getAllFoods")
+	public @ResponseBody Iterable<Food> getAllFoods() {
+
+		return foodRepository.findAll();
+	}
+
 	@GetMapping(path="/addTestFood") // Map ONLY GET Requests
 	@ResponseBody
 	public ResponseEntity<Object> addTestFood () {
@@ -42,22 +48,22 @@ public class FoodController {
 		Food quantumKumquat = new Food();
 		quantumKumquat.setFoodName("quantumKumquat");
 		quantumKumquat.setCalories(0);
-		quantumKumquat.setCarbohydrates(0);
-		quantumKumquat.setFiber(0);
-		quantumKumquat.setIron(0);
-		quantumKumquat.setMagnesium(0);
-		quantumKumquat.setPhospherous(0);
-		quantumKumquat.setPotassium(0);
-		quantumKumquat.setProtein(0);
-		quantumKumquat.setSatFat(0);
+		quantumKumquat.setCarbohydrates(0.0);
+		quantumKumquat.setFiber(0.0);
+		quantumKumquat.setIron(0.0);
+		quantumKumquat.setMagnesium(0.0);
+		quantumKumquat.setPhospherous(0.0);
+		quantumKumquat.setPotassium(0.0);
+		quantumKumquat.setProtein(0.0);
+		quantumKumquat.setSatFat(0.0);
 		quantumKumquat.setServingUnit("Quarks");
-		quantumKumquat.setSodium(19);
-		quantumKumquat.setSugar(11);
-		quantumKumquat.setTotalFat(99);
-		quantumKumquat.setTransFat(4);
-		quantumKumquat.setVitaminC(1);
-		quantumKumquat.setVitaminD(69);
-		quantumKumquat.setZinc(12);
+		quantumKumquat.setSodium(19.0);
+		quantumKumquat.setSugar(11.0);
+		quantumKumquat.setTotalFat(99.0);
+		quantumKumquat.setTransFat(4.0);
+		quantumKumquat.setVitaminC(1.0);
+		quantumKumquat.setVitaminD(69.0);
+		quantumKumquat.setZinc(12.0);
 		
 		foodRepository.save(quantumKumquat);
 		
