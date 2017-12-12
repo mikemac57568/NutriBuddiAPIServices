@@ -15,28 +15,26 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ImageStepsAdd extends SpringFeatureTest {
+public class ImageStepsUpdate extends SpringFeatureTest {
     @Autowired
     private MockMvc mockMvc;
     private ResultActions response;
 
-    @When("^Bob adds an image$")
-    public void bobAddsAnImage() throws Throwable {
+    @When("^Ken provides the new information$")
+    public void kenProvidesTheNewInformation() throws Throwable {
         String userAuthorization = "Basic " + Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
         response = mockMvc.perform(get("http://localhost:8080/imageClassifier/addNewImage")
                 .header("Authorization", userAuthorization)
                 .param("email", "test@test.com")
-                .param("foodName", "muffin")
-                .param("fileName", "ChihuahuaOrMuffin")
-                .param("numServing", "100")
-                .param("latitude", "73293.2323")
-                .param("longitude", "123432.32")
+                .param("oldFileName", "muffin")
+                .param("newFileName", "muffinbutton")
+                .param("latitude", "11234.3")
+                .param("longitude", "23432.2")
                 .accept(MediaType.APPLICATION_JSON));
     }
 
-    @Then("^it should succeed with adding the image$")
-    public void itShouldSucceedWithAddingTheImage() throws Throwable {
-        response.andExpect(status().isOk()).andDo(print()).andReturn();
-
+    @Then("^the image should update accordingly$")
+    public void theImageShouldUpdateAccordingly() throws Throwable {
+        response.andExpect(status().is4xxClientError()).andDo(print()).andReturn();
     }
 }

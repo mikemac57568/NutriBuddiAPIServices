@@ -15,28 +15,23 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ImageStepsAdd extends SpringFeatureTest {
+public class ImageStepsDelete extends SpringFeatureTest {
     @Autowired
     private MockMvc mockMvc;
     private ResultActions response;
 
-    @When("^Bob adds an image$")
-    public void bobAddsAnImage() throws Throwable {
+    @When("^Jenny deletes an image$")
+    public void jennyDeletesAnImage() throws Throwable {
         String userAuthorization = "Basic " + Base64.getEncoder().encodeToString(("user" + ":" + "default").getBytes());
-        response = mockMvc.perform(get("http://localhost:8080/imageClassifier/addNewImage")
+        response = mockMvc.perform(get("http://localhost:8080/imageClassifier/deleteImage")
                 .header("Authorization", userAuthorization)
                 .param("email", "test@test.com")
-                .param("foodName", "muffin")
                 .param("fileName", "ChihuahuaOrMuffin")
-                .param("numServing", "100")
-                .param("latitude", "73293.2323")
-                .param("longitude", "123432.32")
                 .accept(MediaType.APPLICATION_JSON));
     }
 
-    @Then("^it should succeed with adding the image$")
-    public void itShouldSucceedWithAddingTheImage() throws Throwable {
-        response.andExpect(status().isOk()).andDo(print()).andReturn();
-
+    @Then("^it should succeed with deleting the image$")
+    public void itShouldSucceedWithDeletingTheImage() throws Throwable {
+        response.andExpect(status().is4xxClientError()).andDo(print()).andReturn();
     }
 }
